@@ -1,9 +1,9 @@
 package org.yusufteker.konekt.ui.navigation
 
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
+import kotlinx.serialization.Serializable
 
-@Serializable
+@kotlinx.serialization.Serializable
 sealed class Routes(
     @Transient val screenName: String = ""
 ) {
