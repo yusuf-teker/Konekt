@@ -12,6 +12,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
+import org.yusufteker.konekt.ui.screen.tasklist.presentation.TaskListScreenRoot
+import org.yusufteker.konekt.ui.screen.tasklist.presentation.TaskListViewModel
 
 @Composable
 fun AppNavHost(
@@ -55,7 +58,9 @@ fun AppNavHost(
             // Main Graph
             navigation<Routes.MainGraph>(startDestination = Routes.Dashboard) {
                 composable<Routes.Dashboard> {
-                    // TODO: DashboardScreenRoot()
+
+                    val viewModel: TaskListViewModel = koinViewModel()
+                    TaskListScreenRoot(viewModel)
                 }
                 composable<Routes.TaskScreen> {
                     // TODO: TaskScreenRoot()
