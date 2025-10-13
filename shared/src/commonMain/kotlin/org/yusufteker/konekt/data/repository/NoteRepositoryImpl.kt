@@ -1,4 +1,4 @@
-package org.yusufteker.konekt.data
+package org.yusufteker.konekt.data.repository
 
 
 import kotlinx.coroutines.flow.MutableStateFlow

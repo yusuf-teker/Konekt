@@ -35,7 +35,9 @@ kotlin {
             // put your Multiplatform dependencies here
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.coroutines.core)
-
+            api(libs.multiplatform.settings)
+            // Observable wrapper (opsiyonel)
+            api(libs.multiplatform.settings.coroutines)
 
         }
         commonTest.dependencies {
