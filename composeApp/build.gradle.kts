@@ -62,6 +62,9 @@ kotlin {
             implementation(libs.koin.compose.viewmodel)
             api(libs.koin.core)
             implementation(libs.kotlinx.serialization.json)
+            implementation(libs.compose.icons.extended)
+            implementation(libs.kotlinx.datetime)
+
 
         }
         commonTest.dependencies {
