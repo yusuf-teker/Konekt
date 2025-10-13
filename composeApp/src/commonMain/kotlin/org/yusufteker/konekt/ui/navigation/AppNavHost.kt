@@ -2,6 +2,7 @@ package org.yusufteker.konekt.ui.navigation
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
@@ -13,6 +14,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
+import org.yusufteker.konekt.ui.screen.dashboard.presentation.DashboardScreenRoot
+import org.yusufteker.konekt.ui.screen.notes.presentation.NotesScreenRoot
 import org.yusufteker.konekt.ui.screen.tasklist.presentation.TaskListScreenRoot
 import org.yusufteker.konekt.ui.screen.tasklist.presentation.TaskListViewModel
 
@@ -45,7 +48,7 @@ fun AppNavHost(
         NavHost(
             navController = navController,
             startDestination = startDestination,
-            modifier = Modifier
+            modifier = Modifier.padding(innerPadding)
         ) {
 
             // Onboarding Graph
@@ -58,18 +61,25 @@ fun AppNavHost(
             // Main Graph
             navigation<Routes.MainGraph>(startDestination = Routes.Dashboard) {
                 composable<Routes.Dashboard> {
-
-                    TaskListScreenRoot(
-                         onNavigateTo = { navModel ->
+                    DashboardScreenRoot(
+                        onNavigateTo = { navModel ->
                             navController.navigateTo(navModel)
                         }
                     )
                 }
-                composable<Routes.TaskScreen> {
-                    // TODO: TaskScreenRoot()
+                composable<Routes.TaskListScreen> {
+                    TaskListScreenRoot(
+                        onNavigateTo = { navModel ->
+                            navController.navigateTo(navModel)
+                        }
+                    )
                 }
                 composable<Routes.NotesScreen> {
-                    // TODO: NotesScreenRoot()
+                    NotesScreenRoot(
+                        onNavigateTo = { navModel ->
+                            navController.navigateTo(navModel)
+                        }
+                    )
                 }
                 composable<Routes.SettingsScreen> {
                     // TODO: SettingsScreenRoot()
