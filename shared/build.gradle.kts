@@ -36,8 +36,8 @@ kotlin {
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.coroutines.core)
             api(libs.multiplatform.settings)
-            // Observable wrapper (opsiyonel)
             api(libs.multiplatform.settings.coroutines)
+            implementation(libs.napier.logging)
 
         }
         commonTest.dependencies {

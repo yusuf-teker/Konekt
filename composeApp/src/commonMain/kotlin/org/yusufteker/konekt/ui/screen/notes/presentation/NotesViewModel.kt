@@ -1,16 +1,20 @@
 package org.yusufteker.konekt.ui.screen.notes.presentation
 
 import androidx.lifecycle.viewModelScope
+import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+import org.yusufteker.konekt.data.preferences.AppPreference
 import org.yusufteker.konekt.domain.models.Note
 import org.yusufteker.konekt.domain.repository.NoteRepository
+import org.yusufteker.konekt.domain.repository.SettingsRepository
 import org.yusufteker.konekt.feature.notes.NotesAction
 import org.yusufteker.konekt.feature.notes.NotesState
 import org.yusufteker.konekt.ui.base.PlatformBaseViewModel
 
 class NotesViewModel(
-    private val noteRepository: NoteRepository
+    private val noteRepository: NoteRepository,
 ) :
     PlatformBaseViewModel<NotesState>(NotesState()) {
 
@@ -26,6 +30,7 @@ class NotesViewModel(
 
 
     private fun loadNotes() {
+
         noteRepository.getNotes().onEach { notes ->
             setState {
                 copy(notes = notes)

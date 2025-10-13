@@ -22,10 +22,10 @@ class DashboardViewModel(
         when (action) {
             is DashboardAction.Init -> {}
             is DashboardAction.NavigateBack -> navigateBack()
-            DashboardAction.NavigateToTasks -> sendUiEventSafe(UiEvent.NavigateTo(Routes.TaskListScreen))
-            DashboardAction.NavigateToNotes -> sendUiEventSafe(UiEvent.NavigateTo(Routes.NotesScreen))
-            DashboardAction.NavigateToProfile -> sendUiEventSafe(UiEvent.NavigateTo(Routes.NotesScreen))
-            DashboardAction.NavigateToSettings -> sendUiEventSafe(UiEvent.NavigateTo(Routes.NotesScreen))
+            is DashboardAction.NavigateToTasks -> sendUiEventSafe(UiEvent.NavigateTo(Routes.TaskListScreen))
+            is DashboardAction.NavigateToNotes -> sendUiEventSafe(UiEvent.NavigateTo(Routes.NotesScreen))
+            is DashboardAction.NavigateToProfile -> sendUiEventSafe(UiEvent.NavigateTo(Routes.SettingsScreen))
+            is DashboardAction.NavigateToSettings -> sendUiEventSafe(UiEvent.NavigateTo(Routes.SettingsScreen))
         }
     }
 

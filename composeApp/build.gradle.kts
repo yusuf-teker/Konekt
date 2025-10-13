@@ -64,6 +64,8 @@ kotlin {
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.compose.icons.extended)
             implementation(libs.kotlinx.datetime)
+            implementation(libs.napier.logging)
+
 
 
         }

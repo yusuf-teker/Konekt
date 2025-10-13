@@ -1,16 +1,18 @@
 package org.yusufteker.konekt.di
 
-import android.content.Context
-import com.russhwolf.settings.Settings
-import com.russhwolf.settings.SharedPreferencesSettings
-import org.koin.dsl.module
 
+import com.russhwolf.settings.ExperimentalSettingsApi
+import com.russhwolf.settings.coroutines.SuspendSettings
+import org.koin.android.ext.koin.androidApplication
+
+import org.koin.dsl.module
+import org.yusufteker.konekt.data.preferences.AppSettingsFactory
+
+@OptIn(ExperimentalSettingsApi::class)
 actual val platformModule = module {
 
-    single<Settings> {
-        val context: Context = get()
-        val delegate = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        SharedPreferencesSettings(delegate)
-    }
 
+    single<SuspendSettings> {
+        AppSettingsFactory.create()
+    }
 }

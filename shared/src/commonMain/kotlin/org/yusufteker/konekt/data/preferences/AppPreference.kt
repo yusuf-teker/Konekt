@@ -1,10 +1,17 @@
 package org.yusufteker.konekt.data.preferences
 
-import com.russhwolf.settings.Settings
-import com.russhwolf.settings.get
-import com.russhwolf.settings.set
+import com.russhwolf.settings.ExperimentalSettingsApi
+import com.russhwolf.settings.coroutines.SuspendSettings
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
-class AppPreference(private val settings: Settings) {
+class AppPreference @OptIn(ExperimentalSettingsApi::class) constructor(
+    private val settings: SuspendSettings
+) {
 
     companion object {
         private const val KEY_THEME = "theme_mode"
@@ -23,50 +30,33 @@ class AppPreference(private val settings: Settings) {
         }
     }
 
-    /**
-     * Tema modunu kaydet
-     */
-    fun setThemeMode(theme: ThemeMode) {
-        settings[KEY_THEME] = theme.value
+    private val scope = CoroutineScope(Dispatchers.Default)
+
+    private val _themeModeFlow = MutableStateFlow(ThemeMode.SYSTEM)
+
+    init {
+        scope.launch {
+            _themeModeFlow.value = getThemeMode()
+        }
     }
 
-    /**
-     * Kayıtlı tema modunu getir
-     */
-    fun getThemeMode(): ThemeMode {
-        val themeValue: String = settings[KEY_THEME] ?: DEFAULT_THEME
+    @OptIn(ExperimentalSettingsApi::class)
+    suspend fun setThemeMode(theme: ThemeMode) {
+        settings.putString(KEY_THEME, theme.value)
+        _themeModeFlow.value = theme
+    }
+
+    @OptIn(ExperimentalSettingsApi::class)
+    suspend fun getThemeMode(): ThemeMode {
+        val themeValue = settings.getString(KEY_THEME, DEFAULT_THEME)
         return ThemeMode.fromValue(themeValue)
     }
 
-    /**
-     * Dark mode aktif mi kontrol et
-     */
-    fun isDarkMode(): Boolean {
-        return getThemeMode() == ThemeMode.DARK
-    }
+    fun observeThemeMode(): StateFlow<ThemeMode> = _themeModeFlow.asStateFlow()
 
-    /**
-     * Light mode aktif mi kontrol et
-     */
-    fun isLightMode(): Boolean {
-        return getThemeMode() == ThemeMode.LIGHT
-    }
-
-    /**
-     * System theme kullanılıyor mu kontrol et
-     */
-    fun isSystemTheme(): Boolean {
-        return getThemeMode() == ThemeMode.SYSTEM
-    }
-
-    /**
-     * Tüm tercihleri sıfırla
-     */
-    fun clearAll() {
+    @OptIn(ExperimentalSettingsApi::class)
+    suspend fun clearAll() {
         settings.clear()
+        _themeModeFlow.value = ThemeMode.SYSTEM
     }
-}
-
-expect object SettingsFactory {
-    fun create(): Settings
 }

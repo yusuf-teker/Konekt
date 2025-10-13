@@ -16,6 +16,7 @@ import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import org.yusufteker.konekt.ui.screen.dashboard.presentation.DashboardScreenRoot
 import org.yusufteker.konekt.ui.screen.notes.presentation.NotesScreenRoot
+import org.yusufteker.konekt.ui.screen.settings.presentation.SettingsScreenRoot
 import org.yusufteker.konekt.ui.screen.tasklist.presentation.TaskListScreenRoot
 import org.yusufteker.konekt.ui.screen.tasklist.presentation.TaskListViewModel
 
@@ -82,7 +83,9 @@ fun AppNavHost(
                     )
                 }
                 composable<Routes.SettingsScreen> {
-                    // TODO: SettingsScreenRoot()
+                    SettingsScreenRoot {
+                        navController.navigateTo(it)
+                    }
                 }
                 composable<Routes.ProfileScreen> {
                     // TODO: ProfileScreenRoot()

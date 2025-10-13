@@ -25,6 +25,7 @@ kotlinSerialization = "1.8.1"
 compose-icons = "1.7.0"
 kotlinx-datetime = "0.6.1"
 data-store = "1.1.7"
+napier-logging = "2.7.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -57,6 +58,7 @@ androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "d
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences",version.ref = "data-store"  }
 multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatformSettings" }
 multiplatform-settings-coroutines = { module = "com.russhwolf:multiplatform-settings-coroutines", version.ref = "multiplatformSettings" }
+napier-logging = { module = "io.github.aakira:napier", version.ref = "napier-logging" }
 
 
 [plugins]
