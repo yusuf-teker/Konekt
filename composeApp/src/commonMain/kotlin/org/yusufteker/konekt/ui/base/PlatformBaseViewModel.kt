@@ -34,4 +34,10 @@ open class PlatformBaseViewModel<S : BaseState>(
     fun <T> navigateWithData(route: org.yusufteker.konekt.ui.navigation.Routes, data: T, popUpToRoute: org.yusufteker.konekt.ui.navigation.Routes? = null, inclusive: Boolean = false) {
         sendUiEvent(UiEvent.NavigateWithData(route, data, popUpToRoute, inclusive))
     }
+
+    fun sendUiEventSafe(event: UiEvent) {
+        launchWithLoading {
+            _uiEvent.emit(event)
+        }
+    }
 }
