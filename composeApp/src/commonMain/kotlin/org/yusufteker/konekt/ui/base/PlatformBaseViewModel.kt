@@ -13,6 +13,7 @@ open class PlatformBaseViewModel<S : BaseState>(
     initialState: S
 ) : ViewModel(), BaseViewModel<S> by BaseViewModelImpl(initialState), KoinComponent {
 
+
     private val _uiEvent = MutableSharedFlow<UiEvent>()
     val uiEvent = _uiEvent.asSharedFlow()
 

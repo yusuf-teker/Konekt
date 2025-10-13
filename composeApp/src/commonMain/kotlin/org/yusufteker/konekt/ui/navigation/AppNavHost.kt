@@ -59,8 +59,11 @@ fun AppNavHost(
             navigation<Routes.MainGraph>(startDestination = Routes.Dashboard) {
                 composable<Routes.Dashboard> {
 
-                    val viewModel: TaskListViewModel = koinViewModel()
-                    TaskListScreenRoot(viewModel)
+                    TaskListScreenRoot(
+                         onNavigateTo = { navModel ->
+                            navController.navigateTo(navModel)
+                        }
+                    )
                 }
                 composable<Routes.TaskScreen> {
                     // TODO: TaskScreenRoot()
