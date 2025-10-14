@@ -21,6 +21,9 @@ import org.yusufteker.konekt.ui.theme.AppTheme
 import org.yusufteker.konekt.ui.utils.hideKeyboard
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
+import org.yusufteker.konekt.ui.popup.GlobalPopupHost
+import org.yusufteker.konekt.ui.popup.LocalPopupManager
+import org.yusufteker.konekt.ui.popup.PopupManager
 
 @Composable
 @Preview
@@ -28,6 +31,7 @@ fun App() {
     val focusManager = LocalFocusManager.current
     val navController = rememberNavController()
     val appViewModel: AppViewModel = koinViewModel()
+    val popupManager = koinInject<PopupManager>()
 
     val state by appViewModel.state
 
@@ -52,11 +56,11 @@ fun App() {
             color = AppColors.background
         ) {
             CompositionLocalProvider( // Bu ve altındaki composable'lar popupManager'ı kullanabilir
-                //LocalPopupManager provides popupManager
+                LocalPopupManager provides popupManager
             ) {
 
                 AppNavHost(navController = navController)
-                //GlobalPopupHost() // provider edildiği için popupManager'ı kullanabilir
+                GlobalPopupHost() // provider edildiği için popupManager'ı kullanabilir
             }
 
         }

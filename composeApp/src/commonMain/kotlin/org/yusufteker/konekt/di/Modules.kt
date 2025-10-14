@@ -17,12 +17,16 @@ import org.yusufteker.konekt.domain.repository.MessageRepository
 import org.yusufteker.konekt.domain.repository.NoteRepository
 import org.yusufteker.konekt.domain.repository.SettingsRepository
 import org.yusufteker.konekt.domain.repository.TaskRepository
+import org.yusufteker.konekt.ui.popup.PopupManager
 import org.yusufteker.konekt.ui.screen.dashboard.presentation.DashboardViewModel
 import org.yusufteker.konekt.ui.screen.notes.presentation.NotesViewModel
 import org.yusufteker.konekt.ui.screen.settings.presentation.SettingsViewModel
 
 @OptIn(ExperimentalSettingsApi::class)
 val sharedModule = module {
+
+    single { PopupManager() }
+
 
     single<TaskRepository> { TaskRepositoryImpl() }
     viewModel { TaskListViewModel(get()) }
