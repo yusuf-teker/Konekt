@@ -6,6 +6,7 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 import org.yusufteker.konekt.ui.screen.tasklist.presentation.TaskListViewModel
 import org.koin.core.module.dsl.viewModel
+import org.yusufteker.konekt.app.AppViewModel
 import org.yusufteker.konekt.data.preferences.AppPreference
 import org.yusufteker.konekt.data.preferences.AppSettingsFactory
 import org.yusufteker.konekt.data.repository.MessageRepositoryImpl
@@ -40,6 +41,7 @@ val sharedModule = module {
     }
     viewModel { SettingsViewModel(get()) }
 
+    viewModel { AppViewModel(get()) }
 }
 
 expect val platformModule: Module

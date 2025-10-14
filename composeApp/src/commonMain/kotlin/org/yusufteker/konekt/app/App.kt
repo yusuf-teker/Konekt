@@ -1,4 +1,4 @@
-package org.yusufteker.konekt
+package org.yusufteker.konekt.app
 
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -19,18 +19,19 @@ import org.yusufteker.konekt.ui.navigation.AppNavHost
 import org.yusufteker.konekt.ui.theme.AppColors
 import org.yusufteker.konekt.ui.theme.AppTheme
 import org.yusufteker.konekt.ui.utils.hideKeyboard
-import org.koin.compose.getKoin
 import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 @Preview
 fun App() {
     val focusManager = LocalFocusManager.current
     val navController = rememberNavController()
-    val settingsRepository: SettingsRepository = koinInject()
-    val themeMode by settingsRepository.observeThemeMode().collectAsState(
-        initial = AppPreference.ThemeMode.SYSTEM
-    )
+    val appViewModel: AppViewModel = koinViewModel()
+
+    val state by appViewModel.state
+
+    val themeMode= state.themeMode
 
     AppTheme(
         darkTheme = when (themeMode) {
