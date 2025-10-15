@@ -21,13 +21,14 @@ class TaskListViewModel(
             is TaskListAction.AddTask -> addTask(action.task)
             is TaskListAction.DeleteTask -> deleteTask(action.id)
             is TaskListAction.ToggleComplete -> toggleComplete(action.id, action.isCompleted)
-            is TaskListAction.Refresh -> refreshTasks()
+            is TaskListAction.Refresh -> fetchRemoteTasks()
         }
     }
 
 
     init {
-        refreshTasks()
+        observeTasks()
+        fetchRemoteTasks()
     }
     private fun loadTasks() {
         launchWithLoading {
@@ -36,6 +37,19 @@ class TaskListViewModel(
                 setState { copy(tasks = tasks) }
 
             }.launchIn(viewModelScope)
+        }
+    }
+
+    private fun observeTasks() {
+        taskRepository.getTasks().onEach { tasks ->
+            setState { copy(tasks = tasks) }
+        }.launchIn(viewModelScope)
+    }
+
+    /** 🔹 Backend’den verileri getirip repository’yi güncelle */
+    private fun fetchRemoteTasks() {
+        launchWithLoading {
+            taskRepository.fetchTasks()
         }
     }
     private fun addTask(task: Task) {

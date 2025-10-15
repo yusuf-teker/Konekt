@@ -8,11 +8,14 @@ import org.koin.dsl.module
 import org.yusufteker.konekt.ui.screen.tasklist.presentation.TaskListViewModel
 import org.koin.core.module.dsl.viewModel
 import org.yusufteker.konekt.app.AppViewModel
-import org.yusufteker.konekt.data.network.TaskApi
-import org.yusufteker.konekt.data.network.TaskApiImpl
+import org.yusufteker.konekt.data.datasource.local.TaskLocalDataSource
+import org.yusufteker.konekt.data.datasource.local.TaskLocalDataSourceImpl
+import org.yusufteker.konekt.data.datasource.remote.TaskRemoteDataSource
+import org.yusufteker.konekt.data.datasource.remote.TaskRemoteDataSourceImpl
+import org.yusufteker.konekt.data.network.api.TaskApi
+import org.yusufteker.konekt.data.network.api.TaskApiImpl
 import org.yusufteker.konekt.data.network.createHttpClient
 import org.yusufteker.konekt.data.preferences.AppPreference
-import org.yusufteker.konekt.data.preferences.AppSettingsFactory
 import org.yusufteker.konekt.data.repository.MessageRepositoryImpl
 import org.yusufteker.konekt.data.repository.NoteRepositoryImpl
 import org.yusufteker.konekt.data.repository.SettingsRepositoryImpl
@@ -34,7 +37,9 @@ val sharedModule = module {
     single { createHttpClient(get<HttpClientEngine>()) }
 
     single<TaskApi> { TaskApiImpl(get()) }
-    single<TaskRepository> { TaskRepositoryImpl(get()) }
+    single<TaskLocalDataSource> { TaskLocalDataSourceImpl() }
+    single<TaskRemoteDataSource> { TaskRemoteDataSourceImpl(get()) }
+    single<TaskRepository> { TaskRepositoryImpl(get(),get()) }
     viewModel { TaskListViewModel(get()) }
 
     single<MessageRepository> { MessageRepositoryImpl() }
