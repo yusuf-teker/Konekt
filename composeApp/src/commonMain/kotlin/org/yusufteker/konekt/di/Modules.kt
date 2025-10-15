@@ -2,11 +2,15 @@ package org.yusufteker.konekt.di
 
 
 import com.russhwolf.settings.ExperimentalSettingsApi
+import io.ktor.client.engine.HttpClientEngine
 import org.koin.core.module.Module
 import org.koin.dsl.module
 import org.yusufteker.konekt.ui.screen.tasklist.presentation.TaskListViewModel
 import org.koin.core.module.dsl.viewModel
 import org.yusufteker.konekt.app.AppViewModel
+import org.yusufteker.konekt.data.network.TaskApi
+import org.yusufteker.konekt.data.network.TaskApiImpl
+import org.yusufteker.konekt.data.network.createHttpClient
 import org.yusufteker.konekt.data.preferences.AppPreference
 import org.yusufteker.konekt.data.preferences.AppSettingsFactory
 import org.yusufteker.konekt.data.repository.MessageRepositoryImpl
@@ -27,8 +31,10 @@ val sharedModule = module {
 
     single { PopupManager() }
 
+    single { createHttpClient(get<HttpClientEngine>()) }
 
-    single<TaskRepository> { TaskRepositoryImpl() }
+    single<TaskApi> { TaskApiImpl(get()) }
+    single<TaskRepository> { TaskRepositoryImpl(get()) }
     viewModel { TaskListViewModel(get()) }
 
     single<MessageRepository> { MessageRepositoryImpl() }

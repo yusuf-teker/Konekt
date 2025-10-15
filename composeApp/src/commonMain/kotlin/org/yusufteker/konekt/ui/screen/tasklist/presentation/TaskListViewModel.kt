@@ -26,8 +26,12 @@ class TaskListViewModel(
     }
 
 
+    init {
+        refreshTasks()
+    }
     private fun loadTasks() {
         launchWithLoading {
+            taskRepository.fetchTasks()
             taskRepository.getTasks().onEach { tasks ->
                 setState { copy(tasks = tasks) }
 

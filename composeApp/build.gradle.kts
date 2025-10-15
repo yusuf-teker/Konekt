@@ -46,6 +46,8 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.ktor.client.okhttp)
+
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -65,9 +67,7 @@ kotlin {
             implementation(libs.compose.icons.extended)
             implementation(libs.kotlinx.datetime)
             implementation(libs.napier.logging)
-
-
-
+            implementation(libs.bundles.ktor)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -75,6 +75,15 @@ kotlin {
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutinesSwing)
+            implementation(libs.ktor.client.cio)
+        }
+
+        jsMain.dependencies {
+            implementation(libs.ktor.client.js)
+            implementation(libs.ktor.client.core)
+        }
+        nativeMain.dependencies {
+            implementation(libs.ktor.client.darwin)
         }
     }
 }

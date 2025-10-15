@@ -1,3 +1,4 @@
+import org.gradle.kotlin.dsl.implementation
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.ide.kotlinExtrasSerialization
@@ -39,13 +40,21 @@ kotlin {
             api(libs.multiplatform.settings.coroutines)
             implementation(libs.napier.logging)
 
-        }
+            implementation(libs.bundles.ktor)
+            implementation(libs.bundles.coil)
+
+
+   }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
         androidMain.dependencies {
             implementation(libs.kotlinx.coroutinesSwing)
         }
+        nativeMain.dependencies {
+            implementation(libs.ktor.client.darwin)
+        }
+
         
     }
 }
