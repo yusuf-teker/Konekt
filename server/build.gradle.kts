@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.kotlinJvm)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
     application
 }
 
@@ -13,17 +14,14 @@ application {
 }
 
 dependencies {
-    implementation(projects.shared)
-    implementation(libs.logback)
-    implementation(libs.ktor.serverCore)
-    implementation(libs.ktor.serverNetty)
+
     testImplementation(libs.ktor.serverTestHost)
     testImplementation(libs.kotlin.testJunit)
-    implementation(libs.ktor.server.content.negotiation)
-    implementation(libs.ktor.serialization.kotlinx.json)
-    implementation(libs.ktor.serverCore)
-    implementation(libs.ktor.serverNetty)
-    implementation(libs.ktor.server.content.negotiation)
-    implementation(libs.ktor.serialization.kotlinx.json)
-    implementation(libs.ktor.server.call.logging)
+    implementation(projects.shared)
+    implementation(libs.kotlinx.datetime)
+    implementation(libs.logback)
+
+    implementation(libs.bundles.ktor.server)
+    implementation(libs.bundles.exposed)
+    implementation(libs.postgresql)
 }

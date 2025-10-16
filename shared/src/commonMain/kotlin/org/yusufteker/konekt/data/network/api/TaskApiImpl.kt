@@ -25,7 +25,7 @@ class TaskApiImpl(private val client: HttpClient) : TaskApi {
 
     override suspend fun updateTask(task: Task): Result<Task, DataError.Remote> =
         safeCall {
-            client.put("$baseUrl/task/${task.id}") {
+            client.put("$baseUrl/tasks/${task.id}") {
                 contentType(ContentType.Application.Json)
                 setBody(task)
             }

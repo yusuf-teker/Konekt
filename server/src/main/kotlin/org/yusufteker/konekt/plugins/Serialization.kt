@@ -1,4 +1,4 @@
-package org.yusufteker.konekt
+package org.yusufteker.konekt.plugins
 
 import io.ktor.server.application.*
 import io.ktor.serialization.kotlinx.json.*

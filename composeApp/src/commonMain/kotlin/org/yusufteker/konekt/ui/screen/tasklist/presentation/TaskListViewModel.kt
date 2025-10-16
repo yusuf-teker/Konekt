@@ -58,11 +58,6 @@ class TaskListViewModel(
         }
     }
 
-    private fun refreshTasks() {
-        launchWithLoading {
-            setState { copy(tasks = tasks.shuffled()) }
-        }
-    }
     private fun toggleComplete(id: String, isCompleted: Boolean) {
         launchWithLoading {
             val task = state.value.tasks.find { it.id == id } ?: return@launchWithLoading
