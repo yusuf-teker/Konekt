@@ -21,27 +21,7 @@ fun User.toEntity(): UserEntity = UserEntity(
     avatarUrl = avatarUrl,
     createdAt = createdAt,
     updatedAt = updatedAt,
-    isActive = isActive
+    isActive = isActive,
+    password = ""
 )
 
-/* Client + Serverde api resposne için User modeli kullanılcak
-fun UserDTO.toDomain(): User = User(
-    id = id,
-    username = username,
-    email = email,
-    avatarUrl = avatarUrl,
-    createdAt = createdAt,
-    updatedAt = updatedAt,
-    isActive = isActive
-)
-
-fun User.toDTO(): UserDTO = UserDTO(
-    id = id,
-    username = username,
-    email = email,
-    avatarUrl = avatarUrl,
-    createdAt = createdAt,
-    updatedAt = updatedAt,
-    isActive = isActive
-)
-*/

@@ -2,18 +2,14 @@ package org.yusufteker.konekt.plugins
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import io.github.cdimascio.dotenv.dotenv
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import io.ktor.server.response.*
 
-fun Application.configureAuthentication() {
-    val jwtConfig = JwtConfig(
-        secret = environment.config.property("jwt.secret").getString(),
-        issuer = environment.config.property("jwt.issuer").getString(),
-        audience = environment.config.property("jwt.audience").getString(),
-        realm = environment.config.property("jwt.realm").getString()
-    )
+fun Application.configureAuthentication(jwtConfig: JwtConfig) {
+
 
     install(Authentication) {
         jwt("auth-jwt") {

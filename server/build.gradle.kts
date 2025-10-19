@@ -20,8 +20,13 @@ dependencies {
     implementation(projects.shared)
     implementation(libs.kotlinx.datetime)
     implementation(libs.logback)
+    implementation(libs.bundles.ktor)
+
 
     implementation(libs.bundles.ktor.server)
     implementation(libs.bundles.exposed)
     implementation(libs.postgresql)
+    implementation(libs.dotevn)
+    implementation(libs.bcrypt)
+
 }

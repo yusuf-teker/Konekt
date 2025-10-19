@@ -1,27 +1,40 @@
 package org.yusufteker.konekt.plugins
 
+import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import org.yusufteker.konekt.auth.generateToken
+import org.yusufteker.konekt.data.repository.UserRepository
 import org.yusufteker.konekt.domain.models.Task
-
-import io.ktor.http.*
-import io.ktor.server.request.*
-import org.yusufteker.konekt.Greeting
 import org.yusufteker.konekt.domain.models.TaskStatus
+import org.yusufteker.konekt.domain.models.request.LoginRequest
+import org.yusufteker.konekt.domain.models.request.RegisterRequest
+import org.yusufteker.konekt.routes.authRoutes
 
-fun Application.configureRouting() {
+fun Application.configureRouting(jwtConfig: JwtConfig) {
+
+    val userRepository = UserRepository() // ✅ Repository instance
+
     routing {
+
+
+        authRoutes(userRepository, jwtConfig)
+        // 🔹 Test endpoint
         get("/") {
-            call.respondText("Ktor: ${Greeting().greet()}")
+            call.respondText("✅ Server çalışıyor")
         }
+
+        // 🔹 Mock Task listesi
         get("/tasks") {
             val mockTasks = listOf(
                 Task("1", "Mock Görev", "Sadece test için", TaskStatus.IN_PROGRESS)
             )
             call.respond(mockTasks)
         }
-        // Update task endpoint
+
+        // 🔹 Mock task güncelleme
         put("/tasks/{id}") {
             val taskId = call.parameters["id"]
 
@@ -32,19 +45,11 @@ fun Application.configureRouting() {
 
             try {
                 val updatedTask = call.receive<Task>()
-
-                // Mock response - güncellenmiş task'ı geri dön
                 val responseTask = updatedTask.copy(id = taskId)
                 call.respond(HttpStatusCode.OK, responseTask)
-
             } catch (e: Exception) {
-                call.respond(
-                    HttpStatusCode.BadRequest,
-                    mapOf("error" to "Geçersiz task verisi")
-                )
+                call.respond(HttpStatusCode.BadRequest, mapOf("error" to "Geçersiz task verisi"))
             }
         }
-
-
     }
 }
