@@ -88,6 +88,7 @@ postgresql = { module = "org.postgresql:postgresql", version.ref = "postgres" }
 
 dotevn = { module = "io.github.cdimascio:dotenv-kotlin", version.ref = "dotenv" }
 bcrypt = { module = "at.favre.lib:bcrypt", version.ref = "bcrypt" }
+ktor-server-statusPage = { module = "io.ktor:ktor-server-status-pages", version.ref = "ktor" }
 
 
 
@@ -132,6 +133,7 @@ ktor-server = [
     "ktor-serialization-kotlinx-json",
     "ktor-server-resources",
     "ktor-server-call-logging",
+    "ktor-server-statusPage",
 ]
 exposed = [
     "exposed-core",

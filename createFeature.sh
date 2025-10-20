@@ -12,8 +12,8 @@ FEATURE_NAME=$1
 FEATURE_LOWER=$(echo "$FEATURE_NAME" | tr '[:upper:]' '[:lower:]')
 
 # Yollar
-SHARED_PATH="shared/feature/$FEATURE_LOWER"
-UI_PATH="composeApp/ui/screen/$FEATURE_LOWER/presentation"
+SHARED_PATH="shared/src/commonMain/kotlin/org/yusufteker/konekt/feature/$FEATURE_LOWER"
+UI_PATH="composeApp/src/commonMain/kotlin/org/yusufteker/konekt/ui/screen/$FEATURE_LOWER/presentation"
 
 echo "📦 Creating feature: $FEATURE_NAME"
 echo "🧱 Paths:"

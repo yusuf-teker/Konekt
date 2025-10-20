@@ -1,8 +1,10 @@
 package org.yusufteker.konekt.data.entity
 
+import kotlinx.serialization.Serializable
 import org.yusufteker.konekt.domain.models.TaskPriority
 import org.yusufteker.konekt.domain.models.TaskStatus
 
+@Serializable
 data class TaskEntity(
     val id: String,
     val title: String,

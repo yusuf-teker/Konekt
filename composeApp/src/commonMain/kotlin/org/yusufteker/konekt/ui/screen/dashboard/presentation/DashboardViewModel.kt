@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import org.yusufteker.konekt.domain.models.TaskStatus
 import org.yusufteker.konekt.domain.repository.MessageRepository
 import org.yusufteker.konekt.domain.repository.TaskRepository
 import org.yusufteker.konekt.feature.dashboard.DashboardAction
@@ -39,7 +40,7 @@ class DashboardViewModel(
                 .combine(messageRepository.getDailyMessage()) { tasks, message ->
                     DashboardState(
                         totalTasks = tasks.size,
-                        completedTasks = tasks.count { it.isCompleted },
+                        completedTasks = tasks.count { it.status == TaskStatus.DONE },
                         dailyMessage = message
                     )
                 }

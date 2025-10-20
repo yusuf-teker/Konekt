@@ -8,9 +8,12 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.yusufteker.konekt.auth.generateToken
+import org.yusufteker.konekt.data.mapper.toDTO
+import org.yusufteker.konekt.data.mapper.toDomain
 import org.yusufteker.konekt.data.repository.UserRepository
 import org.yusufteker.konekt.domain.models.request.LoginRequest
 import org.yusufteker.konekt.domain.models.request.RegisterRequest
+import org.yusufteker.konekt.domain.models.response.AuthResponse
 import org.yusufteker.konekt.plugins.JwtConfig
 
 fun Route.authRoutes(userRepository: UserRepository, jwtConfig: JwtConfig) {
@@ -22,6 +25,7 @@ fun Route.authRoutes(userRepository: UserRepository, jwtConfig: JwtConfig) {
          */
         post("/register") {
             val request = call.receive<RegisterRequest>()
+            call.application.log.info("Register request: $request")
 
             if (request.username.isBlank() || request.email.isBlank() || request.password.isBlank()) {
                 call.respond(HttpStatusCode.BadRequest, mapOf("error" to "Boş alan bırakılamaz"))
@@ -46,7 +50,12 @@ fun Route.authRoutes(userRepository: UserRepository, jwtConfig: JwtConfig) {
             }
 
             val token = jwtConfig.generateToken(newUser.id)
-            call.respond(HttpStatusCode.Created, mapOf("token" to token, "user" to newUser))
+            // ✅ Düzeltme: AuthResponse kullan
+            val response = AuthResponse(
+                token = token,
+                user = newUser.toDTO()
+            )
+            call.respond(HttpStatusCode.Created, response)
         }
 
         /**
@@ -62,8 +71,12 @@ fun Route.authRoutes(userRepository: UserRepository, jwtConfig: JwtConfig) {
             }
 
             val token = jwtConfig.generateToken(user.id)
-            call.respond(mapOf("token" to token, "user" to user))
-        }
+            // ✅ Düzeltme: AuthResponse kullan
+            val response = AuthResponse(
+                token = token,
+                user = user.toDTO()
+            )
+            call.respond(HttpStatusCode.Created, response)        }
 
         /**
          * GET /auth/me

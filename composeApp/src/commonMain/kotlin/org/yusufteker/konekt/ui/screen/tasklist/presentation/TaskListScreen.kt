@@ -38,6 +38,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
+import org.yusufteker.konekt.domain.models.TaskPriority
+import org.yusufteker.konekt.domain.models.TaskStatus
+
 @Composable
 fun TaskListScreenRoot(
     viewModel: TaskListViewModel = koinViewModel(),
@@ -72,9 +75,18 @@ fun TaskListScreen(
                         TaskListAction.AddTask(
                             Task(
                                 id = Clock.System.now().toEpochMilliseconds().toString(),
-                                title = "Yeni Görev",
-                                description = "Yeni bir görev ekle",
-                                isCompleted = false
+                                title = "Dummy Task",
+                                description = "Bu sadece test için oluşturulmuş bir dummy görevdir",
+                                status = TaskStatus.TODO,
+                                priority = TaskPriority.MEDIUM,
+                                createdAt = Clock.System.now().toEpochMilliseconds(),
+                                updatedAt = Clock.System.now().toEpochMilliseconds(),
+                                dueDate = Clock.System.now().toEpochMilliseconds() + 24 * 60 * 60 * 1000, // 1 gün sonrası
+                                assignedTo = "user-123",
+                                createdBy = "user-123",
+                                isSynced = false,
+                                tags = listOf("test", "dummy"),
+                                commentsCount = 0
                             )
                         )
                     )
@@ -126,7 +138,7 @@ fun TaskItem(
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = if (task.isCompleted)
+            containerColor = if (task.status == TaskStatus.DONE)
                 MaterialTheme.colorScheme.surfaceVariant
             else
                 MaterialTheme.colorScheme.surface
@@ -140,7 +152,7 @@ fun TaskItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Checkbox(
-                checked = task.isCompleted,
+                checked = task.status == TaskStatus.DONE,
                 onCheckedChange = onCheckedChange
             )
             Column(Modifier.weight(1f).padding(start = 8.dp)) {
@@ -149,7 +161,7 @@ fun TaskItem(
                     style = MaterialTheme.typography.titleMedium
                 )
                 Text(
-                    task.description,
+                    task.description ?: "",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

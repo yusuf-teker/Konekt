@@ -10,6 +10,9 @@ sealed class Routes(
     // Onboarding
     @Serializable
     data object OnboardingGraph : Routes("OnboardingGraph")
+
+    @Serializable
+    data object AuthGraph : Routes("AuthGraph")
     @Serializable
     data object Onboarding : Routes("Onboarding")
 
@@ -31,4 +34,9 @@ sealed class Routes(
 
     @Serializable
     data object Back: Routes("Back")
+
+    @Serializable
+    data object Login : Routes("Login")
+    @Serializable
+    data object Register : Routes("Register")
 }

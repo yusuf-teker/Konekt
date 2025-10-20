@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import org.yusufteker.konekt.domain.models.Task
+import org.yusufteker.konekt.domain.models.TaskStatus
 import org.yusufteker.konekt.domain.repository.TaskRepository
 import org.yusufteker.konekt.feature.tasklist.TaskListAction
 import org.yusufteker.konekt.feature.tasklist.TaskListState
@@ -61,7 +62,7 @@ class TaskListViewModel(
     private fun toggleComplete(id: String, isCompleted: Boolean) {
         launchWithLoading {
             val task = state.value.tasks.find { it.id == id } ?: return@launchWithLoading
-            taskRepository.updateTask(task.copy(isCompleted = isCompleted))
+            taskRepository.updateTask(task.copy(status = if (isCompleted) TaskStatus.DONE else TaskStatus.TODO))
         }
     }
     private fun deleteTask(id: String) {

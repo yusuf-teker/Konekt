@@ -6,6 +6,7 @@ import org.yusufteker.konekt.data.DatabaseFactory
 import org.yusufteker.konekt.plugins.JwtConfig
 import org.yusufteker.konekt.plugins.configureAuthentication
 import org.yusufteker.konekt.plugins.configureDatabase
+import org.yusufteker.konekt.plugins.configureMonitoring
 import org.yusufteker.konekt.plugins.configureResources
 import org.yusufteker.konekt.plugins.configureRouting
 import org.yusufteker.konekt.plugins.configureSerialization
@@ -22,7 +23,7 @@ fun Application.module() {
     configureResources()
     configureDatabase()
     DatabaseFactory.init()
-
+    configureMonitoring()
     configureAuthentication(jwtConfig)
     configureRouting(jwtConfig)        // sonra route'lar tanımlanır
 }
