@@ -7,4 +7,5 @@ sealed interface DashboardAction {
     object NavigateToNotes : DashboardAction
     object NavigateToProfile : DashboardAction
     object NavigateToSettings : DashboardAction
+    object Logout: DashboardAction
 }

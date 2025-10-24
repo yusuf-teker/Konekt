@@ -35,29 +35,38 @@ import org.yusufteker.konekt.ui.screen.login.presentation.LoginViewModel
 import org.yusufteker.konekt.ui.screen.notes.presentation.NotesViewModel
 import org.yusufteker.konekt.ui.screen.register.presentation.RegisterViewModel
 import org.yusufteker.konekt.ui.screen.settings.presentation.SettingsViewModel
+import org.yusufteker.konekt.util.security.AuthEventBus
+import org.yusufteker.konekt.util.security.EncryptionHelperImpl
 
 @OptIn(ExperimentalSettingsApi::class)
 val sharedModule = module {
+    single { createHttpClient(get<HttpClientEngine>()) }
 
     single { PopupManager() }
+    single { AuthEventBus }
+    single { EncryptionHelperImpl() }
 
-    single { createHttpClient(get<HttpClientEngine>()) }
+    single { AppPreference(get()) }
+
+    single { SessionManagerImpl(get(),get()) }
+
+    single<AuthApi> { AuthApiImpl(get()) }
+    single<AuthRepository> { AuthRepositoryImpl(get(),get()) }
+
 
     single<TaskApi> { TaskApiImpl(get()) }
     single<TaskLocalDataSource> { TaskLocalDataSourceImpl() }
-    single<TaskRemoteDataSource> { TaskRemoteDataSourceImpl(get()) }
+    single<TaskRemoteDataSource> { TaskRemoteDataSourceImpl(get(),get()) }
     single<TaskRepository> { TaskRepositoryImpl(get(),get()) }
     viewModel { TaskListViewModel(get()) }
 
     single<MessageRepository> { MessageRepositoryImpl() }
-    viewModel { DashboardViewModel(get(), get()) }
+    viewModel { DashboardViewModel(get(), get(),get()) }
 
     single<NoteRepository> { NoteRepositoryImpl() }
     viewModel { NotesViewModel(get()) }
 
 
-    single { AppPreference(get()) }
-    single { SessionManagerImpl(get()) }
 
     single<SettingsRepository> {
         SettingsRepositoryImpl(get())
@@ -66,10 +75,9 @@ val sharedModule = module {
 
     viewModel { AppViewModel(get()) }
 
-    single<AuthApi> { AuthApiImpl(get()) }
-    single<AuthRepository> { AuthRepositoryImpl(get(),get()) }
     viewModel {RegisterViewModel(get())  }
     viewModel { LoginViewModel(get()) }
+
 }
 
 expect val platformModule: Module

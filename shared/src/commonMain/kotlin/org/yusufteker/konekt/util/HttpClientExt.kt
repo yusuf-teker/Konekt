@@ -6,6 +6,8 @@ import io.ktor.client.network.sockets.SocketTimeoutException
 import io.ktor.client.statement.HttpResponse
 import io.ktor.util.network.UnresolvedAddressException
 import kotlinx.coroutines.ensureActive
+import org.yusufteker.konekt.util.security.AuthEvent
+import org.yusufteker.konekt.util.security.AuthEventBus
 import kotlin.coroutines.coroutineContext
 
 //Safa Call Http istegi atma
@@ -38,6 +40,14 @@ suspend inline fun <reified T> responseToResult(
                 Result.Error(DataError.Remote.SERIALIZATION)
             }
         }
+        401 -> {
+            try { //
+                AuthEventBus.emit(AuthEvent.LoggedOut)
+            }catch (_:Exception){}
+
+            Result.Error(DataError.Remote.UNAUTHORIZED)
+        }
+        403 -> Result.Error(DataError.Remote.FORBIDDEN)
 
         408 -> Result.Error(DataError.Remote.REQUEST_TIMEOUT)
         429 -> Result.Error(DataError.Remote.TOO_MANY_REQUESTS)

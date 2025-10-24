@@ -1,4 +1,4 @@
-package org.yusufteker.konekt.domain.models
+package org.yusufteker.konekt.data.network.dto
 
 import kotlinx.serialization.Serializable
 

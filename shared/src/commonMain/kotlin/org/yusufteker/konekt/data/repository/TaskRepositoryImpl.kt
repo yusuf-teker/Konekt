@@ -60,7 +60,7 @@ class TaskRepositoryImpl(
                     Napier.e("Add task failed: $error")
                     // Offline fallback
                     // TODO: local.insertTask(task)
-                    _tasks.update { it + task }
+                    //_tasks.update { it + task }
                 }
                 result
             }

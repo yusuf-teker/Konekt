@@ -1,12 +1,13 @@
 package org.yusufteker.konekt.data.mapper
 
 
+import org.yusufteker.konekt.data.entity.SubTaskEntity
 import org.yusufteker.konekt.data.entity.TaskEntity
+import org.yusufteker.konekt.domain.models.SubTask
 import org.yusufteker.konekt.domain.models.Task
-import org.yusufteker.konekt.domain.models.TaskPriority
-import org.yusufteker.konekt.domain.models.TaskStatus
 
-fun TaskEntity.toDomain(): Task = Task(
+// --- Entity ↔ Domain
+fun TaskEntity.toDomain() = Task(
     id = id,
     title = title,
     description = description,
@@ -17,12 +18,18 @@ fun TaskEntity.toDomain(): Task = Task(
     dueDate = dueDate,
     assignedTo = assignedTo,
     createdBy = createdBy,
+    updatedBy = updatedBy,
     isSynced = isSynced,
+    isArchived = isArchived,
     tags = tags,
-    commentsCount = commentsCount
+    commentsCount = commentsCount,
+    attachments = attachments,
+    subtasks = subtasks.map { it.toDomain() }
 )
+fun List<TaskEntity>.toDomain() = map { it.toDomain() }
 
-fun Task.toEntity(): TaskEntity = TaskEntity(
+
+fun Task.toEntity() = TaskEntity(
     id = id,
     title = title,
     description = description,
@@ -33,42 +40,23 @@ fun Task.toEntity(): TaskEntity = TaskEntity(
     dueDate = dueDate,
     assignedTo = assignedTo,
     createdBy = createdBy,
+    updatedBy = updatedBy,
     isSynced = isSynced,
+    isArchived = isArchived,
     tags = tags,
-    commentsCount = commentsCount
+    commentsCount = commentsCount,
+    attachments = attachments,
+    subtasks = subtasks.map { it.toEntity() }
 )
 
-/*Client + Serverde api resposne için Task modeli kullanılcak
-
-fun TaskDTO.toDomain(): Task = Task(
+fun SubTask.toEntity() = SubTaskEntity(
     id = id,
     title = title,
-    description = description,
-    status = TaskStatus.valueOf(status),
-    priority = TaskPriority.valueOf(priority),
-    createdAt = createdAt,
-    updatedAt = updatedAt,
-    dueDate = dueDate,
-    assignedTo = assignedTo,
-    createdBy = createdBy,
-    isSynced = isSynced,
-    tags = tags,
-    commentsCount = commentsCount
+    isDone = isDone
 )
 
-fun Task.toDTO(): TaskDTO = TaskDTO(
+fun SubTaskEntity.toDomain() = SubTask(
     id = id,
     title = title,
-    description = description,
-    status = status.name,
-    priority = priority.name,
-    createdAt = createdAt,
-    updatedAt = updatedAt,
-    dueDate = dueDate,
-    assignedTo = assignedTo,
-    createdBy = createdBy,
-    isSynced = isSynced,
-    tags = tags,
-    commentsCount = commentsCount
+    isDone = isDone
 )
-*/

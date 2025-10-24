@@ -16,7 +16,18 @@ data class TaskEntity(
     val dueDate: Long?,
     val assignedTo: String?,
     val createdBy: String?,
+    val updatedBy: String?,
     val isSynced: Boolean,
+    val isArchived: Boolean,
     val tags: List<String>,
-    val commentsCount: Int
+    val commentsCount: Int,
+    val attachments: List<String>,
+    val subtasks: List<SubTaskEntity>
+)
+
+@Serializable
+data class SubTaskEntity(
+    val id: String,
+    val title: String,
+    val isDone: Boolean
 )

@@ -3,7 +3,7 @@ package org.yusufteker.konekt.data.network.api
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import org.yusufteker.konekt.domain.models.UserDTO
+import org.yusufteker.konekt.data.network.dto.UserDTO
 import org.yusufteker.konekt.domain.models.response.AuthResponse
 import org.yusufteker.konekt.domain.models.request.LoginRequest
 import org.yusufteker.konekt.domain.models.request.RegisterRequest

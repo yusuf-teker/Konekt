@@ -1,7 +1,6 @@
 package org.yusufteker.konekt.data.network.api
 
-import org.yusufteker.konekt.domain.models.User
-import org.yusufteker.konekt.domain.models.UserDTO
+import org.yusufteker.konekt.data.network.dto.UserDTO
 import org.yusufteker.konekt.domain.models.request.LoginRequest
 import org.yusufteker.konekt.domain.models.request.RegisterRequest
 import org.yusufteker.konekt.domain.models.response.AuthResponse

@@ -3,6 +3,7 @@ package org.yusufteker.konekt.ui.screen.dashboard.presentation
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -85,7 +86,7 @@ fun DashboardScreen(
         }
 
         // 3️⃣ Shortcut Butonlar
-        Row(
+        FlowRow(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround
         ) {
@@ -93,6 +94,8 @@ fun DashboardScreen(
             ShortcutButton("Notlar") { onAction(DashboardAction.NavigateToNotes) }
             ShortcutButton("Profil") { onAction(DashboardAction.NavigateToProfile) }
             ShortcutButton("Ayarlar") { onAction(DashboardAction.NavigateToSettings) }
+            ShortcutButton("Çıkış") { onAction(DashboardAction.Logout) }
+
         }
     }
 }

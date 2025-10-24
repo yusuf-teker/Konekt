@@ -47,5 +47,6 @@
     <string name="monthly">Monthly</string>
     <string name="yearly">Yearly</string>
     <string name="one_time">One-time</string>
+    <string name ="logout_message">Logged out..</string>
 
 </resources>

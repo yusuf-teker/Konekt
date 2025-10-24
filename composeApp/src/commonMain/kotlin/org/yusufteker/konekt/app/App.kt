@@ -6,12 +6,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.navigation.compose.rememberNavController
+import konekt.composeapp.generated.resources.Res
+import konekt.composeapp.generated.resources.logout_message
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.yusufteker.konekt.data.preferences.AppPreference
 import org.yusufteker.konekt.domain.repository.SettingsRepository
@@ -21,9 +24,12 @@ import org.yusufteker.konekt.ui.theme.AppTheme
 import org.yusufteker.konekt.ui.utils.hideKeyboard
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
+import org.yusufteker.konekt.ui.navigation.Routes
 import org.yusufteker.konekt.ui.popup.GlobalPopupHost
 import org.yusufteker.konekt.ui.popup.LocalPopupManager
 import org.yusufteker.konekt.ui.popup.PopupManager
+import org.yusufteker.konekt.util.security.AuthEvent
+import org.yusufteker.konekt.util.security.AuthEventBus
 
 @Composable
 @Preview
@@ -36,6 +42,24 @@ fun App() {
     val state by appViewModel.state
 
     val themeMode= state.themeMode
+
+    LaunchedEffect(Unit) {
+        AuthEventBus.events.collect { event ->
+            when (event) {
+                AuthEvent.LoggedOut -> {
+                    // gösterilecek mesaj
+                    popupManager.showError(Res.string.logout_message){
+                        // navController ile login'e yönlendir
+                        navController.navigate(Routes.Login) {
+                            popUpTo(0) // tüm geçmişi temizle — proje yapısına göre popUpTo grafikte uygun route ile ayarla
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
 
     AppTheme(
         darkTheme = when (themeMode) {
