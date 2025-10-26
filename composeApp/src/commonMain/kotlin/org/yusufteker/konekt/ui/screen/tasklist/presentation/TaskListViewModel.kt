@@ -10,6 +10,7 @@ import org.yusufteker.konekt.domain.repository.TaskRepository
 import org.yusufteker.konekt.feature.tasklist.TaskListAction
 import org.yusufteker.konekt.feature.tasklist.TaskListState
 import org.yusufteker.konekt.ui.base.PlatformBaseViewModel
+import org.yusufteker.konekt.ui.navigation.Routes
 
 class TaskListViewModel(
     private val taskRepository: TaskRepository
@@ -23,6 +24,9 @@ class TaskListViewModel(
             is TaskListAction.DeleteTask -> deleteTask(action.id)
             is TaskListAction.ToggleComplete -> toggleComplete(action.id, action.isCompleted)
             is TaskListAction.Refresh -> fetchRemoteTasks()
+            is TaskListAction.NavigateToTaskCreate -> navigateTo(Routes.TaskCreateScreen)
+            is TaskListAction.NavigateToTaskDetail -> TODO()
+            is TaskListAction.NavigateToTaskEdit -> TODO()
         }
     }
 

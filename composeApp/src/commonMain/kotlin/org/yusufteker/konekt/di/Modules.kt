@@ -35,6 +35,7 @@ import org.yusufteker.konekt.ui.screen.login.presentation.LoginViewModel
 import org.yusufteker.konekt.ui.screen.notes.presentation.NotesViewModel
 import org.yusufteker.konekt.ui.screen.register.presentation.RegisterViewModel
 import org.yusufteker.konekt.ui.screen.settings.presentation.SettingsViewModel
+import org.yusufteker.konekt.ui.screen.taskcreate.presentation.TaskCreateViewModel
 import org.yusufteker.konekt.util.security.AuthEventBus
 import org.yusufteker.konekt.util.security.EncryptionHelperImpl
 
@@ -77,6 +78,9 @@ val sharedModule = module {
 
     viewModel {RegisterViewModel(get())  }
     viewModel { LoginViewModel(get()) }
+
+
+    viewModel { TaskCreateViewModel(get()) }
 
 }
 

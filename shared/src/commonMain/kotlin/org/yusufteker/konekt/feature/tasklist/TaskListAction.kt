@@ -10,4 +10,7 @@ sealed interface TaskListAction {
     data class ToggleComplete(val id: String, val isCompleted: Boolean) : TaskListAction
     data class  AddTask(val task: Task) : TaskListAction
 
+    data class NavigateToTaskDetail(val id: String) : TaskListAction
+    data class NavigateToTaskEdit(val id: String) : TaskListAction
+    data object NavigateToTaskCreate : TaskListAction
 }

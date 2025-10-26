@@ -21,6 +21,7 @@ import org.yusufteker.konekt.ui.screen.login.presentation.LoginScreenRoot
 import org.yusufteker.konekt.ui.screen.notes.presentation.NotesScreenRoot
 import org.yusufteker.konekt.ui.screen.register.presentation.RegisterScreenRoot
 import org.yusufteker.konekt.ui.screen.settings.presentation.SettingsScreenRoot
+import org.yusufteker.konekt.ui.screen.taskcreate.presentation.TaskCreateScreenRoot
 import org.yusufteker.konekt.ui.screen.tasklist.presentation.TaskListScreenRoot
 import org.yusufteker.konekt.ui.screen.tasklist.presentation.TaskListViewModel
 import org.yusufteker.konekt.util.DataError
@@ -135,6 +136,20 @@ fun AppNavHost(
                             navController.navigateTo(navModel)
                         }
                     )
+                }
+                composable<Routes.TaskCreateScreen> {
+                    // TODO: TaskCreateScreenRoot()
+                    TaskCreateScreenRoot(
+                        onNavigateTo = { navModel ->
+                            navController.navigateTo(navModel)
+                        }
+                    )
+                }
+                composable<Routes.TaskDetailScreen> {
+                    // TODO: TaskDetailScreenRoot()
+                }
+                composable<Routes.TaskEditScreen> {
+                    // TODO: TaskEditScreenRoot()
                 }
                 composable<Routes.NotesScreen> {
                     NotesScreenRoot(

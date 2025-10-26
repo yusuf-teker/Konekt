@@ -71,25 +71,7 @@ fun TaskListScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    onAction(
-                        TaskListAction.AddTask(
-                            Task(
-                                id = Clock.System.now().toEpochMilliseconds().toString(),
-                                title = "Dummy Task",
-                                description = "Bu sadece test için oluşturulmuş bir dummy görevdir",
-                                status = TaskStatus.TODO,
-                                priority = TaskPriority.MEDIUM,
-                                createdAt = Clock.System.now().toEpochMilliseconds(),
-                                updatedAt = Clock.System.now().toEpochMilliseconds(),
-                                dueDate = Clock.System.now().toEpochMilliseconds() + 24 * 60 * 60 * 1000, // 1 gün sonrası
-                                assignedTo = "user-123",
-                                createdBy = "user-123",
-                                isSynced = false,
-                                tags = listOf("test", "dummy"),
-                                commentsCount = 0
-                            )
-                        )
-                    )
+                    onAction(TaskListAction.NavigateToTaskCreate)
                 }
             ) {
                 Icon(Icons.Default.Add, contentDescription = "Yeni Görev")
@@ -133,7 +115,8 @@ fun TaskListScreen(
 fun TaskItem(
     task: Task,
     onCheckedChange: (Boolean) -> Unit,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
+    onTaskClick: () -> Unit = {}
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),

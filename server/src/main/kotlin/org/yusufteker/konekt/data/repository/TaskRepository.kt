@@ -115,23 +115,57 @@ class TaskRepository {
     /**
      * 🧠 Extension: Row → TaskEntity dönüşümü
      */
+    /**
+     * 🧠 ResultRow → TaskEntity dönüşümü (tam sürüm)
+     */
     private fun ResultRow.toTaskEntity(): TaskEntity = TaskEntity(
         id = this[TaskTable.id],
         title = this[TaskTable.title],
         description = this[TaskTable.description],
+
+        // Status & Priority
         status = org.yusufteker.konekt.domain.models.TaskStatus.valueOf(this[TaskTable.status]),
         priority = org.yusufteker.konekt.domain.models.TaskPriority.valueOf(this[TaskTable.priority]),
+
+        // Timestamps
         createdAt = this[TaskTable.createdAt],
         updatedAt = this[TaskTable.updatedAt],
         dueDate = this[TaskTable.dueDate],
+
+        // 🔔 Reminder
+        reminderTime = this[TaskTable.reminderTime],
+        isReminderSent = this[TaskTable.isReminderSent],
+
+        // 🔁 Recurrence
+        isRecurring = this[TaskTable.isRecurring],
+        recurrencePattern = this[TaskTable.recurrencePattern]?.let {
+            org.yusufteker.konekt.domain.models.RecurrencePattern.valueOf(it)
+        },
+        recurrenceConfig = this[TaskTable.recurrenceConfig]?.let {
+            json.decodeFromString<org.yusufteker.konekt.data.entity.RecurrenceConfigEntity>(it)
+        },
+
+        // User Relations
         assignedTo = this[TaskTable.assignedTo],
         createdBy = this[TaskTable.createdBy],
         updatedBy = this[TaskTable.updatedBy],
+
+        // Sync & Archive
         isSynced = this[TaskTable.isSynced],
         isArchived = this[TaskTable.isArchived],
+
+        // Collections (JSON string → list)
         tags = json.decodeFromString(this[TaskTable.tags]),
         attachments = json.decodeFromString(this[TaskTable.attachments]),
         subtasks = json.decodeFromString(this[TaskTable.subtasks]),
-        commentsCount = this[TaskTable.commentsCount]
+
+        // Metadata
+        commentsCount = this[TaskTable.commentsCount],
+        viewsCount = this[TaskTable.viewsCount],
+        completionRate = this[TaskTable.completionRate],
+
+        // 🎨 Visual
+        colorTag = this[TaskTable.colorTag]
     )
+
 }

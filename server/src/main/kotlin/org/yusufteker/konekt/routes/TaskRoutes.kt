@@ -6,11 +6,12 @@ import io.ktor.server.auth.jwt.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import org.yusufteker.konekt.data.entity.TaskEntity
 import org.yusufteker.konekt.data.mapper.toDomain
 import org.yusufteker.konekt.data.repository.TaskRepository
+import org.yusufteker.konekt.domain.models.Task
 import org.yusufteker.konekt.domain.models.request.CreateTaskRequest
 import org.yusufteker.konekt.domain.models.request.UpdateTaskRequest
-import java.util.*
 
 fun Route.taskRoutes(taskRepository: TaskRepository) {
 
@@ -43,8 +44,8 @@ fun Route.taskRoutes(taskRepository: TaskRepository) {
                 val userId = principal?.payload?.getClaim("userId")?.asString()
                     ?: return@get call.respond(HttpStatusCode.Unauthorized)
 
-                val tasks = taskRepository.getTasksByUser(userId)
-                call.respond(tasks.toDomain())
+                val tasks: List<TaskEntity> = taskRepository.getTasksByUser(userId)
+                call.respond<List<Task>>(tasks.map { it.toDomain() })
             }
 
             // 🔍 ID'ye göre görev getir

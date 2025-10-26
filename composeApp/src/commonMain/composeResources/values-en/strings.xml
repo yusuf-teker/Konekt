@@ -49,4 +49,20 @@
     <string name="one_time">One-time</string>
     <string name ="logout_message">Logged out..</string>
 
+    <!-- STATUS SECTION -->
+    <string name="status_title">Status</string>
+    <string name="status_todo">To Do</string>
+    <string name="status_in_progress">In Progress</string>
+    <string name="status_done">Completed</string>
+    <string name="status_blocked">Blocked</string>
+
+
+    <!-- RECURRENCE SECTION -->
+    <string name="recurrence_daily">Daily</string>
+    <string name="recurrence_weekly">Weekly</string>
+    <string name="recurrence_monthly">Monthly</string>
+    <string name="recurrence_yearly">Yearly</string>
+    <string name="recurrence_custom">Custom</string>
+
+
 </resources>

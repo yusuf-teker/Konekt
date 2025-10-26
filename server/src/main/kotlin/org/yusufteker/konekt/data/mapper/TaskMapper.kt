@@ -1,12 +1,8 @@
 package org.yusufteker.konekt.data.mapper
 
+import org.yusufteker.konekt.data.entity.*
+import org.yusufteker.konekt.domain.models.*
 
-import org.yusufteker.konekt.data.entity.SubTaskEntity
-import org.yusufteker.konekt.data.entity.TaskEntity
-import org.yusufteker.konekt.domain.models.SubTask
-import org.yusufteker.konekt.domain.models.Task
-
-// --- Entity ↔ Domain
 fun TaskEntity.toDomain() = Task(
     id = id,
     title = title,
@@ -19,15 +15,24 @@ fun TaskEntity.toDomain() = Task(
     assignedTo = assignedTo,
     createdBy = createdBy,
     updatedBy = updatedBy,
+    isRecurring = isRecurring,
+    recurrencePattern = recurrencePattern,
+    recurrenceConfig = recurrenceConfig?.toDomain(),
+    reminderTime = reminderTime,
+    isReminderSent = isReminderSent,
     isSynced = isSynced,
     isArchived = isArchived,
-    tags = tags,
     commentsCount = commentsCount,
+    viewsCount = viewsCount,
+    completionRate = completionRate,
+    colorTag = colorTag,
+    tags = tags,
     attachments = attachments,
-    subtasks = subtasks.map { it.toDomain() }
+    subtasks = subtasks.map { it.toDomain() },
+    location = location,
+    latitude = latitude,
+    longitude = longitude
 )
-fun List<TaskEntity>.toDomain() = map { it.toDomain() }
-
 
 fun Task.toEntity() = TaskEntity(
     id = id,
@@ -41,22 +46,32 @@ fun Task.toEntity() = TaskEntity(
     assignedTo = assignedTo,
     createdBy = createdBy,
     updatedBy = updatedBy,
+    isRecurring = isRecurring,
+    recurrencePattern = recurrencePattern,
+    recurrenceConfig = recurrenceConfig?.toEntity(),
+    reminderTime = reminderTime,
+    isReminderSent = isReminderSent,
     isSynced = isSynced,
     isArchived = isArchived,
-    tags = tags,
     commentsCount = commentsCount,
+    viewsCount = viewsCount,
+    completionRate = completionRate,
+    colorTag = colorTag,
+    tags = tags,
     attachments = attachments,
-    subtasks = subtasks.map { it.toEntity() }
+    subtasks = subtasks.map { it.toEntity() },
+    location = location,
+    latitude = latitude,
+    longitude = longitude
 )
 
-fun SubTask.toEntity() = SubTaskEntity(
-    id = id,
-    title = title,
-    isDone = isDone
-)
 
-fun SubTaskEntity.toDomain() = SubTask(
-    id = id,
-    title = title,
-    isDone = isDone
-)
+
+fun SubTaskEntity.toDomain() = SubTask(id, title, isDone, order)
+fun SubTask.toEntity() = SubTaskEntity(id, title, isDone, order)
+
+fun RecurrenceConfigEntity.toDomain() =
+    RecurrenceConfig(pattern, interval, endDate, daysOfWeek)
+
+fun RecurrenceConfig.toEntity() =
+    RecurrenceConfigEntity(pattern, interval, endDate, daysOfWeek)

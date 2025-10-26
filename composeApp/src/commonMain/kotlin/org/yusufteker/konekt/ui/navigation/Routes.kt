@@ -26,6 +26,12 @@ sealed class Routes(
     @Serializable
     data object TaskListScreen : Routes("TaskListScreen")
     @Serializable
+    data object TaskCreateScreen : Routes("TaskCreateScreen")
+    @Serializable
+    data object TaskDetailScreen : Routes("TaskDetailScreen")
+    @Serializable
+    data object TaskEditScreen : Routes("TaskEditScreen")
+    @Serializable
     data object NotesScreen : Routes("NotesScreen")
     @Serializable
     data object SettingsScreen : Routes("SettingsScreen")

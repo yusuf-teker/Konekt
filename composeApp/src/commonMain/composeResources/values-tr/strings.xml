@@ -48,4 +48,20 @@
     <string name ="logout_message">Çıkış yapılıyor.</string>
 
 
+    <!-- STATUS SECTION -->
+    <string name="status_title">Durum</string>
+    <string name="status_todo">Yapılacak</string>
+    <string name="status_in_progress">Devam Ediyor</string>
+    <string name="status_done">Tamamlandı</string>
+    <string name="status_blocked">Engellendi</string>
+
+
+    <!-- RECURRENCE SECTION -->
+    <string name="recurrence_daily">Günlük</string>
+    <string name="recurrence_weekly">Haftalık</string>
+    <string name="recurrence_monthly">Aylık</string>
+    <string name="recurrence_yearly">Yıllık</string>
+    <string name="recurrence_custom">Özel</string>
+
+
 </resources>

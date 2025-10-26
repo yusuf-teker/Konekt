@@ -5,14 +5,18 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.yusufteker.konekt.base.BaseViewModel
 import org.yusufteker.konekt.base.BaseState
 import org.yusufteker.konekt.base.BaseViewModelImpl
+import org.yusufteker.konekt.ui.popup.PopupManager
 
 open class PlatformBaseViewModel<S : BaseState>(
-    initialState: S
+    initialState: S,
 ) : ViewModel(), BaseViewModel<S> by BaseViewModelImpl(initialState), KoinComponent {
 
+
+    val popupManager: PopupManager by inject()
 
     private val _uiEvent = MutableSharedFlow<UiEvent>()
     val uiEvent = _uiEvent.asSharedFlow()
