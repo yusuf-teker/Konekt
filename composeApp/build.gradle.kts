@@ -9,7 +9,6 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
     alias(libs.plugins.jetbrains.kotlin.serialization)
-
 }
 
 kotlin {
@@ -30,17 +29,7 @@ kotlin {
     }
     
     jvm()
-    
-    js {
-        browser()
-        binaries.executable()
-    }
-    
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        browser()
-        binaries.executable()
-    }
+
     
     sourceSets {
         androidMain.dependencies {
@@ -77,11 +66,11 @@ kotlin {
             implementation(libs.kotlinx.coroutinesSwing)
             implementation(libs.ktor.client.cio)
         }
-
+/*
         jsMain.dependencies {
             implementation(libs.ktor.client.js)
             implementation(libs.ktor.client.core)
-        }
+        }*/
         nativeMain.dependencies {
             implementation(libs.ktor.client.darwin)
         }

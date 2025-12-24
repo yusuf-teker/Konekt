@@ -1,6 +1,7 @@
 package org.yusufteker.konekt.feature.login
 
 import org.yusufteker.konekt.base.BaseState
+import org.yusufteker.konekt.util.DataError
 
 data class LoginState(
     override val isLoading: Boolean = false,
@@ -10,7 +11,8 @@ data class LoginState(
     val passwordError: String? = null,
     val isPasswordVisible: Boolean = false,
     val canLogin: Boolean = false,
-    val errorMessage: String? = null
+    val errorMessage: DataError.Remote? = null,
+
 ) : BaseState {
     override fun copyWithLoading(isLoading: Boolean) = copy(isLoading = isLoading)
 }

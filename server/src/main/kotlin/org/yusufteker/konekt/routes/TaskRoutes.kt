@@ -20,15 +20,30 @@ fun Route.taskRoutes(taskRepository: TaskRepository) {
 
             // 🧩 Görev oluştur
             post {
+
+                // ✅ JWT'den kullanıcı kimliğini al
                 val principal = call.principal<JWTPrincipal>()
                 val userId = principal?.payload?.getClaim("userId")?.asString()
                     ?: return@post call.respond(HttpStatusCode.Unauthorized)
 
+                // receive ile (content)body'yi kotlin objesine dönüştür
                 val request = call.receive<CreateTaskRequest>()
+
+                // DB'ye eklemek üzere repositorye bilgileri veri
                 val task = taskRepository.createTask(
                     title = request.title,
                     description = request.description,
+                    status = request.status.name,
                     priority = request.priority.name,
+                    dueDate = request.dueDate,
+                    reminderTime = request.reminderTime,
+                    isRecurring = request.isRecurring,
+                    recurrencePattern = request.recurrencePattern?.name,
+                    recurrenceConfigJson = request.recurrenceConfig?.let { taskRepository.json.encodeToString(it) },
+                    colorTag = request.colorTag,
+                    tags = request.tags,
+                    attachments = request.attachments,
+                    subtasks = request.subtasks,
                     createdBy = userId
                 )
 

@@ -17,6 +17,9 @@
     <string name="error_server">Sunucu hatası. Lütfen daha sonra tekrar deneyin.</string>
     <string name="error_serialization">Veri dönüştürme hatası. Lütfen tekrar deneyin.</string>
     <string name="error_remote_unknown">Bilinmeyen bir hata oluştu.</string>
+    <string name="error_unauthorized">Bu işlemi gerçekleştirmek için yetkiniz yok.Lütfen tekrar giriş yapın.</string>
+    <string name="error_forbidden">Bu işlemi gerçekleştirmek için yetkiniz yok.</string>
+
 
 
     <string name="no_popup_manager">PopupYöneticisi sağlanmadı</string>

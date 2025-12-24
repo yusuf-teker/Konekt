@@ -94,6 +94,10 @@ object TaskTable : Table("tasks") {
         .default(0)
     // Alt görev tamamlanma yüzdesi (0-100)
 
+    // 📍 --- Konum Bilgileri ---
+    val location = varchar("location", 255).nullable()
+    val latitude = double("latitude").nullable()
+    val longitude = double("longitude").nullable()
 
     // 📈 --- İndeksler ---
     init {

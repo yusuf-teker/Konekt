@@ -34,6 +34,7 @@ import org.yusufteker.konekt.feature.login.LoginState
 import org.yusufteker.konekt.ui.base.BaseContentWrapper
 import org.yusufteker.konekt.ui.navigation.NavigationHandler
 import org.yusufteker.konekt.ui.navigation.NavigationModel
+import org.yusufteker.konekt.ui.utils.toUiText
 
 @Composable
 fun LoginScreenRoot(
@@ -142,7 +143,7 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             state.errorMessage?.let { error ->
-                Text(error, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(vertical = 8.dp))
+                Text(error.toUiText().asString(), color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(vertical = 8.dp))
             }
 
             Spacer(modifier = Modifier.height(24.dp))

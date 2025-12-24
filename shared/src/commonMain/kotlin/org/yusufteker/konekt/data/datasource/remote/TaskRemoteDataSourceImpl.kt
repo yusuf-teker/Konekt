@@ -1,5 +1,7 @@
 package org.yusufteker.konekt.data.datasource.remote
 
+import org.yusufteker.konekt.data.mapper.TaskMapper.toCreateRequest
+import org.yusufteker.konekt.data.mapper.TaskMapper.toDTO
 import org.yusufteker.konekt.data.network.api.TaskApi
 import org.yusufteker.konekt.data.repository.SessionManagerImpl
 import org.yusufteker.konekt.domain.models.Task
@@ -25,11 +27,7 @@ class TaskRemoteDataSourceImpl(
         val token = sessionManager.getToken()
             ?: return Result.Error(DataError.Remote.UNAUTHORIZED)
 
-        val createTaskRequest = CreateTaskRequest(
-            title = task.title,
-            description = task.description,
-            priority = task.priority
-        )
+        val createTaskRequest = task.toCreateRequest()
         return api.addTask(token, createTaskRequest)
     }
 

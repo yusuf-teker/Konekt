@@ -50,7 +50,7 @@ fun Route.authRoutes(userRepository: UserRepository, jwtConfig: JwtConfig) {
             }
 
             val token = jwtConfig.generateToken(newUser.id)
-            // ✅ Düzeltme: AuthResponse kullan
+
             val response = AuthResponse(
                 token = token,
                 user = newUser.toDTO()
@@ -76,7 +76,8 @@ fun Route.authRoutes(userRepository: UserRepository, jwtConfig: JwtConfig) {
                 token = token,
                 user = user.toDTO()
             )
-            call.respond(HttpStatusCode.Created, response)        }
+            call.respond(HttpStatusCode.Created, response)
+        }
 
         /**
          * GET /auth/me

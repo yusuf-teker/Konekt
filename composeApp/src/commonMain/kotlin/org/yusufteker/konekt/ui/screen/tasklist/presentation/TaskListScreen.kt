@@ -40,6 +40,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import org.yusufteker.konekt.domain.models.TaskPriority
 import org.yusufteker.konekt.domain.models.TaskStatus
+import org.yusufteker.konekt.ui.screen.tasklist.presentation.components.TaskItem
 
 @Composable
 fun TaskListScreenRoot(
@@ -111,47 +112,3 @@ fun TaskListScreen(
     }
 }
 
-@Composable
-fun TaskItem(
-    task: Task,
-    onCheckedChange: (Boolean) -> Unit,
-    onDelete: () -> Unit,
-    onTaskClick: () -> Unit = {}
-) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = if (task.status == TaskStatus.DONE)
-                MaterialTheme.colorScheme.surfaceVariant
-            else
-                MaterialTheme.colorScheme.surface
-        ),
-        elevation = CardDefaults.cardElevation(2.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(12.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Checkbox(
-                checked = task.status == TaskStatus.DONE,
-                onCheckedChange = onCheckedChange
-            )
-            Column(Modifier.weight(1f).padding(start = 8.dp)) {
-                Text(
-                    task.title,
-                    style = MaterialTheme.typography.titleMedium
-                )
-                Text(
-                    task.description ?: "",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-            IconButton(onClick = onDelete) {
-                Icon(Icons.Default.Delete, contentDescription = "Sil")
-            }
-        }
-    }
-}

@@ -11,7 +11,8 @@ import org.yusufteker.konekt.di.sharedModule
 
 fun main() = application {
     Napier.base(DebugAntilog())
-
+    println("Desktop app starting...")
+    Napier.d("Desktop logger initialized")
     initKoin {
         modules(platformModule, sharedModule)
     }

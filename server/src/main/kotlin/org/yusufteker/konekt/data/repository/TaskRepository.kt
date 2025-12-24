@@ -7,10 +7,11 @@ import org.yusufteker.konekt.data.entity.TaskEntity
 import org.yusufteker.konekt.data.table.TaskTable
 import java.util.UUID
 import kotlinx.serialization.json.Json
+import org.yusufteker.konekt.domain.models.request.CreateSubTaskRequest
 
 class TaskRepository {
 
-    private val json = Json { ignoreUnknownKeys = true }
+    val json = Json { ignoreUnknownKeys = true }
 
     /**
      * ✅ Yeni görev oluşturur.
@@ -19,7 +20,17 @@ class TaskRepository {
     fun createTask(
         title: String,
         description: String?,
+        status: String,
         priority: String,
+        dueDate: Long?,
+        reminderTime: Long?,
+        isRecurring: Boolean,
+        recurrencePattern: String?,
+        recurrenceConfigJson: String?,
+        colorTag: String?,
+        tags: List<String>,
+        attachments: List<String>,
+        subtasks: List<CreateSubTaskRequest>,
         createdBy: String
     ): TaskEntity? = transaction {
         val id = UUID.randomUUID().toString()
@@ -29,21 +40,52 @@ class TaskRepository {
             it[TaskTable.id] = id
             it[TaskTable.title] = title
             it[TaskTable.description] = description
+            it[TaskTable.status] = status
             it[TaskTable.priority] = priority
-            it[TaskTable.status] = "TODO"
+            it[TaskTable.dueDate] = dueDate
+            it[TaskTable.reminderTime] = reminderTime
+            it[TaskTable.isReminderSent] = false
+
+            it[TaskTable.isRecurring] = isRecurring
+            it[TaskTable.recurrencePattern] = recurrencePattern
+            it[TaskTable.recurrenceConfig] = recurrenceConfigJson
+
+            it[TaskTable.colorTag] = colorTag
+
+            // 🏷️ Koleksiyonları JSON olarak kaydet
+            it[TaskTable.tags] = json.encodeToString(tags)
+            it[TaskTable.attachments] = json.encodeToString(attachments)
+            val subtaskEntities = subtasks.map { sub ->
+                SubTaskEntity(
+                    id = UUID.randomUUID().toString(),
+                    title = sub.title,
+                    isDone = sub.isDone,
+                    order = sub.order
+                )
+            }
+            it[TaskTable.subtasks] = json.encodeToString<List<SubTaskEntity>>(subtaskEntities)
+
+            // 🧭 Konum (eklemek istersen)
+            it[TaskTable.latitude] = null
+            it[TaskTable.longitude] = null
+            it[TaskTable.location] = null
+
             it[TaskTable.createdAt] = now
             it[TaskTable.updatedAt] = now
             it[TaskTable.createdBy] = createdBy
+            it[TaskTable.updatedBy] = createdBy
+
             it[TaskTable.isSynced] = true
             it[TaskTable.isArchived] = false
-            it[TaskTable.tags] = "[]"
-            it[TaskTable.attachments] = "[]"
-            it[TaskTable.subtasks] = "[]"
+
             it[TaskTable.commentsCount] = 0
+            it[TaskTable.viewsCount] = 0
+            it[TaskTable.completionRate] = 0
         }.resultedValues?.singleOrNull()
 
         inserted?.toTaskEntity()
     }
+
 
     /**
      * 🔍 Belirli bir kullanıcıya ait görevleri listeler.
@@ -112,9 +154,7 @@ class TaskRepository {
         TaskTable.deleteAll()
     }
 
-    /**
-     * 🧠 Extension: Row → TaskEntity dönüşümü
-     */
+
     /**
      * 🧠 ResultRow → TaskEntity dönüşümü (tam sürüm)
      */

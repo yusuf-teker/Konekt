@@ -11,7 +11,7 @@ import org.yusufteker.konekt.util.*
 
 class AuthApiImpl(private val client: HttpClient) : AuthApi {
 
-    private val baseUrl = "http://10.0.2.2:8080/auth"
+    private val baseUrl = "https://reduction-inc-utilities-past.trycloudflare.com/auth"
 
     override suspend fun register(request: RegisterRequest): Result<AuthResponse, DataError.Remote> {
         return safeCall<AuthResponse> {

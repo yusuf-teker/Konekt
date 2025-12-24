@@ -9,7 +9,7 @@ import org.yusufteker.konekt.util.*
 
 class TaskApiImpl(private val client: HttpClient) : TaskApi {
 
-    private val baseUrl = "http://10.0.2.2:8080"
+    private val baseUrl = "https://reduction-inc-utilities-past.trycloudflare.com"
 
     // 🔑 token tüm isteklerde gerekiyor
     override suspend fun getTasks(token: String): Result<List<Task>, DataError.Remote> =

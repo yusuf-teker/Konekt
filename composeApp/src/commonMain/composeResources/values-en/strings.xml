@@ -18,6 +18,9 @@
     <string name="error_server">Server error. Please try again later.</string>
     <string name="error_serialization">Data conversion error. Please try again.</string>
     <string name="error_remote_unknown">An unknown error occurred.</string>
+    <string name="error_unauthorized">You are not authorized to perform this action.Please log in again.</string>
+    <string name="error_forbidden">You are not authorized to perform this action.</string>
+
 
     <string name="no_popup_manager">No PopupManager provided</string>
 
