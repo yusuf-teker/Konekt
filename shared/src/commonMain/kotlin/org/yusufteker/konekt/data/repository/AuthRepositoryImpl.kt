@@ -53,7 +53,7 @@ class AuthRepositoryImpl(
 
     override suspend fun getCurrentUser(): Result<User, DataError.Remote> {
         val token = sessionManager.getToken()
-            ?: return Result.Error(DataError.Remote.UNAUTHORIZED)
+            ?: return Result.Error(DataError.Remote(DataError.RemoteType.UNAUTHORIZED))
 
         return authApi.getMe(token).map { it.toDomain() }
     }

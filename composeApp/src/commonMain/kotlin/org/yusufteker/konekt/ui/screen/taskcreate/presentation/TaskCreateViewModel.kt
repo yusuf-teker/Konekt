@@ -187,11 +187,11 @@ class TaskCreateViewModel(
                 }
                 is Result.Error -> {
                     val errorMessage = when (result.error) {
-                        DataError.Remote.UNAUTHORIZED ->
+                        DataError.Remote(DataError.RemoteType.UNAUTHORIZED) ->
                             "Oturum süresi dolmuş. Lütfen tekrar giriş yapın."
-                        DataError.Remote.NO_INTERNET ->
+                        DataError.Remote(DataError.RemoteType.NO_INTERNET) ->
                             "İnternet bağlantısı yok"
-                        DataError.Remote.SERVER ->
+                        DataError.Remote(DataError.RemoteType.SERVER) ->
                             "Sunucu hatası. Lütfen daha sonra tekrar deneyin."
                         else -> "Görev oluşturulamadı: ${result.error}"
                     }

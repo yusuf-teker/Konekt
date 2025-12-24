@@ -66,7 +66,10 @@ fun Route.authRoutes(userRepository: UserRepository, jwtConfig: JwtConfig) {
 
             val user = userRepository.login(request.email, request.password)
             if (user == null) {
-                call.respond(HttpStatusCode.Unauthorized, mapOf("error" to "Geçersiz e-posta veya şifre"))
+                call.respond(HttpStatusCode.BadRequest, mapOf(
+                    "code" to "INVALID_CREDENTIALS",
+                    "error" to "Geçersiz e-posta veya şifre"
+                ))
                 return@post
             }
 

@@ -11,7 +11,7 @@ data class LoginState(
     val passwordError: String? = null,
     val isPasswordVisible: Boolean = false,
     val canLogin: Boolean = false,
-    val errorMessage: DataError.Remote? = null,
+    val errorMessage: String? = null,
 
 ) : BaseState {
     override fun copyWithLoading(isLoading: Boolean) = copy(isLoading = isLoading)

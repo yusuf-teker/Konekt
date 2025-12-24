@@ -10,7 +10,7 @@ import org.yusufteker.konekt.plugins.configureMonitoring
 import org.yusufteker.konekt.plugins.configureResources
 import org.yusufteker.konekt.plugins.configureRouting
 import org.yusufteker.konekt.plugins.configureSerialization
-
+//cloudflared tunnel --url http://localhost:8080
 fun main(args: Array<String>) {
     io.ktor.server.netty.EngineMain.main(args)
 }

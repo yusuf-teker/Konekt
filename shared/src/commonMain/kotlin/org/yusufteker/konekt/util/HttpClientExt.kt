@@ -6,6 +6,7 @@ import io.ktor.client.network.sockets.SocketTimeoutException
 import io.ktor.client.statement.HttpResponse
 import io.ktor.util.network.UnresolvedAddressException
 import kotlinx.coroutines.ensureActive
+import org.yusufteker.konekt.data.network.ErrorResponse
 import org.yusufteker.konekt.util.security.AuthEvent
 import org.yusufteker.konekt.util.security.AuthEventBus
 import kotlin.coroutines.coroutineContext
@@ -17,12 +18,12 @@ suspend inline fun <reified T> safeCall(
     val response: HttpResponse = try {
         execute()
     } catch (e: SocketTimeoutException) {
-        return Result.Error(DataError.Remote.REQUEST_TIMEOUT)
+        return Result.Error(DataError.Remote(DataError.RemoteType.REQUEST_TIMEOUT))
     } catch (e: UnresolvedAddressException) {
-        return Result.Error(DataError.Remote.NO_INTERNET)
+        return Result.Error(DataError.Remote(DataError.RemoteType.NO_INTERNET))
     } catch (e: Exception) {
         coroutineContext.ensureActive()
-        return Result.Error(DataError.Remote.UNKNOWN)
+        return Result.Error(DataError.Remote(DataError.RemoteType.UNKNOWN))
     }
     return responseToResult(response)
 }
@@ -32,28 +33,70 @@ suspend inline fun <reified T> responseToResult(
     response: HttpResponse
 ): Result<T, DataError.Remote> {
 
-    return when (response.status.value) { // Response un statu koduna göre başarılı veya başarısız
-        in 200..299 -> { // 200ler arası başarılı
+    return when (response.status.value) {
+
+        in 200..299 -> {
             try {
                 Result.Success(response.body<T>())
             } catch (e: NoTransformationFoundException) {
-                Result.Error(DataError.Remote.SERIALIZATION)
+                Result.Error(
+                    DataError.Remote(
+                        type = DataError.RemoteType.SERIALIZATION,
+                        message = "Serialization error"
+                    )
+                )
             }
         }
-        401 -> {
-            try { //
-                AuthEventBus.emit(AuthEvent.LoggedOut)
-            }catch (_:Exception){}
 
-            Result.Error(DataError.Remote.UNAUTHORIZED)
+        400 -> {
+            val error = try { response.body<ErrorResponse>() } catch (_: Exception) { null }
+
+            Result.Error(
+                DataError.Remote(
+                    type = DataError.RemoteType.BAD_REQUEST,
+                    message = error?.message ?: error?.error ?: "Geçersiz istek"
+                )
+            )
         }
-        403 -> Result.Error(DataError.Remote.FORBIDDEN)
 
-        408 -> Result.Error(DataError.Remote.REQUEST_TIMEOUT)
-        429 -> Result.Error(DataError.Remote.TOO_MANY_REQUESTS)
-        in 500..599 -> Result.Error(DataError.Remote.SERVER)
-        else -> Result.Error(DataError.Remote.UNKNOWN)
+        401 -> {
+            val error = try { response.body<ErrorResponse>() } catch (_: Exception) { null }
 
+            try {
+                AuthEventBus.emit(AuthEvent.LoggedOut)
+            } catch (_: Exception) {}
+
+            Result.Error(
+                DataError.Remote(
+                    type = DataError.RemoteType.UNAUTHORIZED,
+                    message = error?.message ?: error?.error ?: "Yetkisiz erişim"
+                )
+            )
+        }
+
+        403 -> Result.Error(
+            DataError.Remote(
+                type = DataError.RemoteType.FORBIDDEN,
+                message = "Bu işlemi yapma izniniz yok"
+            )
+        )
+
+        408 -> Result.Error(DataError.Remote(DataError.RemoteType.REQUEST_TIMEOUT))
+
+        429 -> Result.Error(DataError.Remote(DataError.RemoteType.TOO_MANY_REQUESTS))
+
+        in 500..599 -> Result.Error(
+            DataError.Remote(
+                type = DataError.RemoteType.SERVER,
+                message = "Sunucu hatası"
+            )
+        )
+
+        else -> Result.Error(
+            DataError.Remote(
+                type = DataError.RemoteType.UNKNOWN,
+                message = "Bilinmeyen hata"
+            )
+        )
     }
-
 }

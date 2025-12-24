@@ -14,19 +14,33 @@ import konekt.composeapp.generated.resources.error_unauthorized
 import org.jetbrains.compose.resources.StringResource
 import org.yusufteker.konekt.ui.base.UiText
 import org.yusufteker.konekt.util.DataError
-
+import org.yusufteker.konekt.util.DataError.RemoteType
 
 fun DataError.Remote.toStringResource(): StringResource {
-    return when (this) {
-        DataError.Remote.REQUEST_TIMEOUT -> Res.string.error_request_timeout
-        DataError.Remote.NO_INTERNET -> Res.string.error_no_internet
-        DataError.Remote.UNAUTHORIZED -> Res.string.error_unauthorized
-        DataError.Remote.FORBIDDEN -> Res.string.error_forbidden
-        DataError.Remote.TOO_MANY_REQUESTS -> Res.string.error_too_many_requests
-        DataError.Remote.SERVER -> Res.string.error_server
-        DataError.Remote.SERIALIZATION -> Res.string.error_serialization
-        DataError.Remote.UNKNOWN -> Res.string.error_remote_unknown
-        DataError.Remote.MISSING_TOKEN -> Res.string.error_unauthorized
+    return when (this.type) {
+
+        RemoteType.REQUEST_TIMEOUT -> Res.string.error_request_timeout
+
+        RemoteType.NO_INTERNET -> Res.string.error_no_internet
+
+        RemoteType.UNAUTHORIZED -> Res.string.error_unauthorized
+
+        RemoteType.FORBIDDEN -> Res.string.error_forbidden
+
+        RemoteType.TOO_MANY_REQUESTS -> Res.string.error_too_many_requests
+
+        RemoteType.SERVER -> Res.string.error_server
+
+        RemoteType.SERIALIZATION -> Res.string.error_serialization
+
+        RemoteType.MISSING_TOKEN -> Res.string.error_unauthorized
+
+        //RemoteType.BAD_REQUEST -> Res.string.error_bad_request
+
+        RemoteType.UNKNOWN -> Res.string.error_remote_unknown
+        else -> {
+            Res.string.error_remote_unknown
+        }
     }
 }
 

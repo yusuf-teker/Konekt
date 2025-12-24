@@ -6,8 +6,6 @@ import org.yusufteker.konekt.feature.login.LoginState
 import org.yusufteker.konekt.ui.base.PlatformBaseViewModel
 import org.yusufteker.konekt.ui.base.UiEvent
 import org.yusufteker.konekt.ui.navigation.Routes
-import org.yusufteker.konekt.ui.utils.toStringResource
-import org.yusufteker.konekt.ui.utils.toUiText
 import org.yusufteker.konekt.util.Result
 
 class LoginViewModel(
@@ -63,7 +61,7 @@ class LoginViewModel(
                     sendUiEventSafe(UiEvent.NavigateTo(Routes.Dashboard))
                 }
                 is Result.Error -> {
-                    setState { copy(isLoading = false, errorMessage = result.error ) }
+                    setState { copy(isLoading = false, errorMessage = result.error.message ) }
                 }
             }
         }

@@ -3,13 +3,13 @@ package org.yusufteker.konekt.data.network.api
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.http.*
+import org.yusufteker.konekt.data.network.baseUrl
 import org.yusufteker.konekt.domain.models.Task
 import org.yusufteker.konekt.domain.models.request.CreateTaskRequest
 import org.yusufteker.konekt.util.*
 
 class TaskApiImpl(private val client: HttpClient) : TaskApi {
 
-    private val baseUrl = "https://reduction-inc-utilities-past.trycloudflare.com"
 
     // 🔑 token tüm isteklerde gerekiyor
     override suspend fun getTasks(token: String): Result<List<Task>, DataError.Remote> =

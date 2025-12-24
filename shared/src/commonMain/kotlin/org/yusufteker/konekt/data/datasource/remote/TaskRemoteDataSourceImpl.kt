@@ -18,14 +18,14 @@ class TaskRemoteDataSourceImpl(
 
     override suspend fun fetchTasks(): Result<List<Task>, DataError.Remote> {
         val token = sessionManager.getToken()
-            ?: return Result.Error(DataError.Remote.UNAUTHORIZED)
+            ?: return Result.Error(DataError.Remote(DataError.RemoteType.UNAUTHORIZED))
 
         return api.getTasks(token)
     }
 
     override suspend fun addTask(task: Task): Result<Task,DataError.Remote> {
         val token = sessionManager.getToken()
-            ?: return Result.Error(DataError.Remote.UNAUTHORIZED)
+            ?: return Result.Error(DataError.Remote(DataError.RemoteType.UNAUTHORIZED))
 
         val createTaskRequest = task.toCreateRequest()
         return api.addTask(token, createTaskRequest)
@@ -33,14 +33,14 @@ class TaskRemoteDataSourceImpl(
 
     override suspend fun updateTask(task: Task): Result<Task, DataError.Remote> {
         val token = sessionManager.getToken()
-            ?: return Result.Error(DataError.Remote.UNAUTHORIZED)
+            ?: return Result.Error(DataError.Remote(DataError.RemoteType.UNAUTHORIZED))
 
         return api.updateTask(token, task)
     }
 
     override suspend fun deleteTask(taskId: String): Result<Unit, DataError.Remote> {
         val token = sessionManager.getToken()
-            ?: return Result.Error(DataError.Remote.UNAUTHORIZED)
+            ?: return Result.Error(DataError.Remote(DataError.RemoteType.UNAUTHORIZED))
 
         return api.deleteTask(token, taskId)
     }
