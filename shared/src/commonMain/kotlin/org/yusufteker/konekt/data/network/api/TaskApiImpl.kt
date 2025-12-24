@@ -3,7 +3,7 @@ package org.yusufteker.konekt.data.network.api
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import org.yusufteker.konekt.data.network.baseUrl
+import org.yusufteker.konekt.data.network.util.baseUrl
 import org.yusufteker.konekt.domain.models.Task
 import org.yusufteker.konekt.domain.models.request.CreateTaskRequest
 import org.yusufteker.konekt.util.*

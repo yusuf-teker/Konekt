@@ -9,12 +9,13 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.yusufteker.konekt.auth.generateToken
 import org.yusufteker.konekt.data.mapper.toDTO
-import org.yusufteker.konekt.data.mapper.toDomain
 import org.yusufteker.konekt.data.repository.UserRepository
 import org.yusufteker.konekt.domain.models.request.LoginRequest
 import org.yusufteker.konekt.domain.models.request.RegisterRequest
 import org.yusufteker.konekt.domain.models.response.AuthResponse
 import org.yusufteker.konekt.plugins.JwtConfig
+import org.yusufteker.konekt.plugins.language
+import org.yusufteker.konekt.util.getLocalizedString
 
 fun Route.authRoutes(userRepository: UserRepository, jwtConfig: JwtConfig) {
 
@@ -68,18 +69,18 @@ fun Route.authRoutes(userRepository: UserRepository, jwtConfig: JwtConfig) {
             if (user == null) {
                 call.respond(HttpStatusCode.BadRequest, mapOf(
                     "code" to "INVALID_CREDENTIALS",
-                    "error" to "Geçersiz e-posta veya şifre"
+                    "error" to getLocalizedString("error.invalid_credentials", call.language)
                 ))
                 return@post
             }
 
             val token = jwtConfig.generateToken(user.id)
-            // ✅ Düzeltme: AuthResponse kullan
+
             val response = AuthResponse(
                 token = token,
                 user = user.toDTO()
             )
-            call.respond(HttpStatusCode.Created, response)
+            call.respond<AuthResponse>(HttpStatusCode.Created, response)
         }
 
         /**
@@ -91,13 +92,13 @@ fun Route.authRoutes(userRepository: UserRepository, jwtConfig: JwtConfig) {
                 val userId = principal?.payload?.getClaim("userId")?.asString()
 
                 if (userId == null) {
-                    call.respond(HttpStatusCode.BadRequest, mapOf("error" to "Geçersiz token"))
+                    call.respond(HttpStatusCode.BadRequest, mapOf("error" to getLocalizedString("invalid_token", call.language)))
                     return@get
                 }
 
                 val user = userRepository.findById(userId)
                 if (user == null) {
-                    call.respond(HttpStatusCode.NotFound, mapOf("error" to "Kullanıcı bulunamadı"))
+                    call.respond(HttpStatusCode.NotFound, mapOf("error" to getLocalizedString("user_not_found", call.language)))
                     return@get
                 }
 

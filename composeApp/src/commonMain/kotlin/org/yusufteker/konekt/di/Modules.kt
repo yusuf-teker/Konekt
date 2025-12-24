@@ -16,7 +16,7 @@ import org.yusufteker.konekt.data.network.api.AuthApi
 import org.yusufteker.konekt.data.network.api.AuthApiImpl
 import org.yusufteker.konekt.data.network.api.TaskApi
 import org.yusufteker.konekt.data.network.api.TaskApiImpl
-import org.yusufteker.konekt.data.network.createHttpClient
+import org.yusufteker.konekt.data.network.util.createHttpClient
 import org.yusufteker.konekt.data.preferences.AppPreference
 import org.yusufteker.konekt.data.repository.AuthRepositoryImpl
 import org.yusufteker.konekt.data.repository.MessageRepositoryImpl

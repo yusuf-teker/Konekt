@@ -1,4 +1,4 @@
-package org.yusufteker.konekt.data.network
+package org.yusufteker.konekt.data.network.util
 
 @kotlinx.serialization.Serializable
 data class ErrorResponse(

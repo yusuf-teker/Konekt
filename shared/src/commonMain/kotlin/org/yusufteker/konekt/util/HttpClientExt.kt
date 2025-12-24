@@ -6,7 +6,7 @@ import io.ktor.client.network.sockets.SocketTimeoutException
 import io.ktor.client.statement.HttpResponse
 import io.ktor.util.network.UnresolvedAddressException
 import kotlinx.coroutines.ensureActive
-import org.yusufteker.konekt.data.network.ErrorResponse
+import org.yusufteker.konekt.data.network.util.ErrorResponse
 import org.yusufteker.konekt.util.security.AuthEvent
 import org.yusufteker.konekt.util.security.AuthEventBus
 import kotlin.coroutines.coroutineContext
