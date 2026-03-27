@@ -1,5 +1,6 @@
 package org.yusufteker.konekt.data.mapper
 
+import org.yusufteker.konekt.data.local.entities.TaskEntity
 import org.yusufteker.konekt.data.network.dto.*
 import org.yusufteker.konekt.domain.models.*
 import org.yusufteker.konekt.domain.models.request.CreateSubTaskRequest
@@ -102,4 +103,27 @@ object TaskMapper {
     }
 
 
+    fun Task.toEntity(): TaskEntity = TaskEntity(
+        id = id,
+        title = title,
+        description = description,
+        status = status.name,
+        priority = priority.name,
+        createdAt = createdAt,
+        updatedAt = updatedAt,
+        isSynced = isSynced,
+        isArchived = isArchived
+    )
+
+    fun TaskEntity.toDomain(): Task = Task(
+        id = id,
+        title = title,
+        description = description,
+        status = TaskStatus.valueOf(status),
+        priority = TaskPriority.valueOf(priority),
+        createdAt = createdAt,
+        updatedAt = updatedAt,
+        isSynced = isSynced,
+        isArchived = isArchived
+    )
 }

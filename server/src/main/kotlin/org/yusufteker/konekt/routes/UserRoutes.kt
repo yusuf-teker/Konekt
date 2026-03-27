@@ -29,13 +29,13 @@ fun Route.authRoutes(userRepository: UserRepository, jwtConfig: JwtConfig) {
             call.application.log.info("Register request: $request")
 
             if (request.username.isBlank() || request.email.isBlank() || request.password.isBlank()) {
-                call.respond(HttpStatusCode.BadRequest, mapOf("error" to "Boş alan bırakılamaz"))
+                call.respond(HttpStatusCode.BadRequest, mapOf("error" to getLocalizedString("error.required_fields", call.language)))
                 return@post
             }
 
             val existingUser = userRepository.login(request.email, request.password)
             if (existingUser != null) {
-                call.respond(HttpStatusCode.Conflict, mapOf("error" to "Bu e-posta zaten kayıtlı"))
+                call.respond(HttpStatusCode.Conflict, mapOf("error" to getLocalizedString("error.email_already_exists", call.language)))
                 return@post
             }
 
@@ -46,7 +46,7 @@ fun Route.authRoutes(userRepository: UserRepository, jwtConfig: JwtConfig) {
             )
 
             if (newUser == null) {
-                call.respond(HttpStatusCode.InternalServerError, mapOf("error" to "Kayıt başarısız"))
+                call.respond(HttpStatusCode.InternalServerError, mapOf("error" to getLocalizedString("error.register_failed", call.language)))
                 return@post
             }
 
@@ -92,13 +92,13 @@ fun Route.authRoutes(userRepository: UserRepository, jwtConfig: JwtConfig) {
                 val userId = principal?.payload?.getClaim("userId")?.asString()
 
                 if (userId == null) {
-                    call.respond(HttpStatusCode.BadRequest, mapOf("error" to getLocalizedString("invalid_token", call.language)))
+                    call.respond(HttpStatusCode.BadRequest, mapOf("error" to getLocalizedString("error.invalid_token", call.language)))
                     return@get
                 }
 
                 val user = userRepository.findById(userId)
                 if (user == null) {
-                    call.respond(HttpStatusCode.NotFound, mapOf("error" to getLocalizedString("user_not_found", call.language)))
+                    call.respond(HttpStatusCode.NotFound, mapOf("error" to getLocalizedString("error.user_not_found", call.language)))
                     return@get
                 }
 
